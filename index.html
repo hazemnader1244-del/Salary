@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Salary Dashboard</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green:  #0B5E4A; --green-l: #0D7A60;
+      --bg:     #F4F6F5; --card:    #FFFFFF;
+      --border: #D8DDD9; --text:    #1A1F1B;
+      --muted:  #6B716C; --red:     #B83232;
+      --amber:  #8A5500; --radius:  10px;
+    }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* ===== LOGIN ===== */
+    #login-screen {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; min-height: 100vh; gap: 0;
+    }
+    .login-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 40px 36px; width: 340px;
+      display: flex; flex-direction: column; gap: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.07);
+    }
+    .login-card h1 { font-size: 1.5rem; color: var(--green); text-align: center; }
+    .login-card p  { font-size: .88rem; color: var(--muted); text-align: center; margin-top: -10px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: .85rem; color: var(--muted); font-weight: 500; }
+    .field input {
+      padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px;
+      font-size: 1rem; color: var(--text); background: var(--bg);
+      outline: none; transition: border-color .2s;
+    }
+    .field input:focus { border-color: var(--green); background: #fff; }
+    .btn-login {
+      background: var(--green); color: #fff; border: none;
+      padding: 11px; border-radius: 8px; font-size: 1rem;
+      cursor: pointer; font-weight: 600; margin-top: 4px;
+      transition: background .2s;
+    }
+    .btn-login:hover { background: var(--green-l); }
+    .btn-login:disabled { background: var(--border); color: var(--muted); cursor: default; }
+    #login-error { color: var(--red); font-size: .88rem; text-align: center; display: none; }
+
+    /* ===== APP ===== */
+    #app { display: none; }
+    header {
+      background: var(--green); color: #fff; padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    header h1 { font-size: 1.2rem; font-weight: 600; }
+    .user-badge {
+      display: flex; align-items: center; gap: 10px; font-size: .9rem;
+    }
+    .avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255,255,255,.25); display: flex; align-items: center;
+      justify-content: center; font-weight: 700; font-size: 1rem; color: #fff;
+    }
+    .btn-logout {
+      background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+      color: #fff; padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: .85rem;
+    }
+
+    /* ===== MONTH BAR ===== */
+    .month-bar {
+      background: var(--card); border-bottom: 1px solid var(--border);
+      padding: 10px 24px; display: flex; align-items: center; gap: 12px;
+    }
+    .month-bar select {
+      padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px;
+      font-size: .95rem; background: var(--card); color: var(--text); cursor: pointer;
+    }
+    .btn-load {
+      background: var(--green); color: #fff; border: none;
+      padding: 7px 16px; border-radius: 6px; cursor: pointer; font-size: .9rem;
+    }
+
+    /* ===== MAIN ===== */
+    main { padding: 20px 24px; display: grid; gap: 16px; max-width: 1200px; margin: 0 auto; }
+
+    /* ===== CARDS ===== */
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
+    .card h2 { font-size: 1rem; color: var(--muted); margin-bottom: 14px; font-weight: 600; }
+
+    /* ===== SUMMARY ===== */
+    .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+    .stat-box { background: var(--bg); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 4px; }
+    .stat-box .label { font-size: .78rem; color: var(--muted); }
+    .stat-box .value { font-size: 1.25rem; font-weight: 700; color: var(--green); }
+    .stat-box .value.red   { color: var(--red); }
+    .stat-box .value.amber { color: var(--amber); }
+
+    /* ===== TWO COL ===== */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ===== TABLES ===== */
+    table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    th { text-align: right; padding: 7px 8px; color: var(--muted); font-weight: 500;
+         border-bottom: 1px solid var(--border); font-size: .82rem; }
+    td { padding: 7px 8px; border-bottom: 1px solid var(--border); }
+    tr:last-child td { border-bottom: none; }
+    .money     { font-weight: 600; color: var(--green); }
+    .money.neg { color: var(--red); }
+
+    /* ===== DAYS TABLE ===== */
+    .days-table { overflow-x: auto; }
+    .days-table table { min-width: 500px; }
+    .days-table th { background: var(--bg); }
+    .friday-row td { background: #032423; color: #7ABEAA; }
+    select.inline-sel {
+      border: 1px solid var(--border); border-radius: 4px; padding: 3px 6px;
+      font-size: .85rem; background: var(--card); color: var(--text); cursor: pointer; min-width: 110px;
+    }
+    .btn-save-row {
+      background: var(--green-l); color: #fff; border: none;
+      padding: 3px 10px; border-radius: 4px; cursor: pointer; font-size: .82rem;
+    }
+    .btn-save-row:disabled { background: var(--border); color: var(--muted); cursor: default; }
+
+    /* ===== SALARY EDIT ===== */
+    .salary-form { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+    .salary-form .field-s { display: flex; flex-direction: column; gap: 4px; }
+    .salary-form label { font-size: .82rem; color: var(--muted); }
+    .salary-form input { padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: .95rem; width: 140px; }
+    .btn-save-sal { background: var(--green); color: #fff; border: none; padding: 7px 18px; border-radius: 6px; cursor: pointer; font-size: .9rem; }
+
+    /* ===== TOAST ===== */
+    #toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: #1A1F1B; color: #fff; padding: 10px 20px; border-radius: 8px;
+      font-size: .9rem; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 999;
+    }
+    #toast.show { opacity: 1; }
+    .loading { color: var(--muted); font-size: .9rem; padding: 20px 0; text-align: center; }
+  </style>
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div id="login-screen">
+  <div class="login-card">
+    <h1>💰 Salary Dashboard</h1>
+    <p>سجّل دخولك عشان تكمل</p>
+    <div class="field">
+      <label>الاسم</label>
+      <input type="text" id="inp-user" placeholder="Hazem" autocomplete="username"/>
+    </div>
+    <div class="field">
+      <label>الباسورد</label>
+      <input type="password" id="inp-pass" placeholder="••••••" autocomplete="current-password"
+             onkeydown="if(event.key==='Enter') doLogin()"/>
+    </div>
+    <button class="btn-login" id="btn-login" onclick="doLogin()">دخول</button>
+    <p id="login-error">❌ الاسم أو الباسورد غلط</p>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app">
+  <header>
+    <h1>💰 Salary Dashboard</h1>
+    <div class="user-badge">
+      <div class="avatar" id="user-avatar">H</div>
+      <span id="user-name"></span>
+      <button class="btn-logout" onclick="logout()">خروج</button>
+    </div>
+  </header>
+  <div class="month-bar">
+    <label for="month-select" style="font-size:.9rem;color:var(--muted)">الشهر:</label>
+    <select id="month-select"></select>
+    <button class="btn-load" onclick="loadMonth()">📂 تحميل</button>
+  </div>
+  <main id="main-content">
+    <p class="loading">اختر شهر واضغط تحميل</p>
+  </main>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ==================== CONFIG ====================
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwxxd6CPmPlKIWA8_dzfnXRkrsCcmczF7hcg2Ihxng07UVEwNjPLrmi4eqKsG9jETJ8/exec";
+
+const OVER_OPTIONS = [
+  "", "Friday", "Double Paid", "Over 4 Double Paid",
+  "Over Per Hours D", "Over Time 4", "Over Time 6", "Over Time 8", "Over Per Hours"
+];
+const DED_OPTIONS = [
+  "", "Annual", "Exam", "Single Day", "Half Day",
+  "Absence", "Day Off", "Official holiday"
+];
+
+// ==================== SESSION ====================
+let SESSION = { user: "", pass: "" };
+
+function saveSession(user, pass) {
+  SESSION = { user, pass };
+  sessionStorage.setItem("sal_user", user);
+  sessionStorage.setItem("sal_pass", pass);
+}
+function loadSession() {
+  SESSION.user = sessionStorage.getItem("sal_user") || "";
+  SESSION.pass = sessionStorage.getItem("sal_pass") || "";
+  return SESSION.user && SESSION.pass;
+}
+function clearSession() {
+  SESSION = { user: "", pass: "" };
+  sessionStorage.removeItem("sal_user");
+  sessionStorage.removeItem("sal_pass");
+}
+
+// ==================== LOGIN ====================
+async function doLogin() {
+  const user = document.getElementById('inp-user').value.trim();
+  const pass = document.getElementById('inp-pass').value.trim();
+  if (!user || !pass) return;
+
+  const btn = document.getElementById('btn-login');
+  btn.disabled = true; btn.textContent = "جاري التحقق...";
+  document.getElementById('login-error').style.display = 'none';
+
+  try {
+    // بنبعت POST عشان نتحقق من الاسم والباسورد
+    const res = await fetch(SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify({ action: "login", user, pass }),
+    });
+    const json = await res.json();
+
+    if (json.error) {
+      document.getElementById('login-error').style.display = 'block';
+    } else {
+      saveSession(user, pass);
+      showApp(user);
+    }
+  } catch (e) {
+    document.getElementById('login-error').textContent = "❌ خطأ في الاتصال";
+    document.getElementById('login-error').style.display = 'block';
+  }
+  btn.disabled = false; btn.textContent = "دخول";
+}
+
+function showApp(user) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('user-name').textContent   = user;
+  document.getElementById('user-avatar').textContent = user.charAt(0).toUpperCase();
+  initApp();
+}
+
+function logout() {
+  clearSession();
+  location.reload();
+}
+
+// ==================== AUTO LOGIN ====================
+window.addEventListener('load', () => {
+  if (loadSession()) showApp(SESSION.user);
+});
+
+// ==================== INIT ====================
+async function initApp() {
+  try {
+    const data = await apiGet("getMonths");
+    const select = document.getElementById('month-select');
+    select.innerHTML = "";
+    [...data.months].reverse().forEach(m => {
+      const opt = document.createElement('option');
+      opt.value = opt.textContent = m;
+      select.appendChild(opt);
+    });
+  } catch(e) {
+    showToast("❌ فشل تحميل الشهور");
+  }
+}
+
+// ==================== API ====================
+async function apiGet(action, extra = {}) {
+  const params = new URLSearchParams({ action, user: SESSION.user, pass: SESSION.pass, ...extra });
+  const res  = await fetch(`${SCRIPT_URL}?${params}`);
+  const json = await res.json();
+  if (json.error) throw new Error(json.error);
+  return json.data;
+}
+
+async function apiPost(body) {
+  const res  = await fetch(SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify({ ...body, user: SESSION.user, pass: SESSION.pass }),
+  });
+  const json = await res.json();
+  if (json.error) throw new Error(json.error);
+  return json.data;
+}
+
+// ==================== LOAD MONTH ====================
+async function loadMonth() {
+  const sheet = document.getElementById('month-select').value;
+  if (!sheet) return;
+  const main = document.getElementById('main-content');
+  main.innerHTML = '<p class="loading">⏳ جاري التحميل...</p>';
+  try {
+    const [summary, sheetData] = await Promise.all([
+      apiGet("getSummary", { sheet }),
+      apiGet("getSheet",   { sheet }),
+    ]);
+    renderDashboard(sheet, summary, sheetData.rows);
+  } catch(e) {
+    main.innerHTML = `<p class="loading" style="color:var(--red)">❌ ${e.message}</p>`;
+  }
+}
+
+// ==================== RENDER ====================
+function renderDashboard(sheet, s, rows) {
+  document.getElementById('main-content').innerHTML =
+    renderSummaryCard(s) +
+    renderOversDeductionsCard(s) +
+    renderSalaryEditCard(s, sheet) +
+    renderDaysCard(rows, sheet);
+}
+
+function renderSummaryCard(s) {
+  return `<div class="card">
+    <h2>ملخص الشهر</h2>
+    <div class="summary-grid">
+      ${stat("Total Salary",    fmt(s.totalSalary))}
+      ${stat("Last Month",      fmt(s.lastMonthSal), "amber")}
+      ${stat("Basic Salary",    fmt(s.basicSalary))}
+      ${stat("Salary + KBI",    fmt(s.salaryPlusKBI))}
+      ${stat("Annual Days",     s.annualDays, "amber")}
+      ${stat("Official Holiday",s.officialHol)}
+      ${stat("Exams",           s.examsVal)}
+    </div>
+  </div>`;
+}
+function stat(label, value, cls = "") {
+  return `<div class="stat-box">
+    <span class="label">${label}</span>
+    <span class="value ${cls}">${value}</span>
+  </div>`;
+}
+
+function renderOversDeductionsCard(s) {
+  const overRows = s.overs.map(o =>
+    `<tr><td>${o.name}</td><td>${o.byDay}</td><td class="money">${fmt(o.money)}</td></tr>`
+  ).join('');
+  const dedRows = s.deductions.map(d =>
+    `<tr><td>${d.name}</td><td>${d.byDay}</td><td class="money neg">${fmt(d.money)}</td></tr>`
+  ).join('');
+  return `<div class="two-col">
+    <div class="card"><h2>Overs</h2>
+      <table><thead><tr><th>النوع</th><th>أيام</th><th>مبلغ</th></tr></thead>
+      <tbody>${overRows}</tbody></table></div>
+    <div class="card"><h2>Deductions</h2>
+      <table><thead><tr><th>النوع</th><th>أيام</th><th>مبلغ</th></tr></thead>
+      <tbody>${dedRows}</tbody></table></div>
+  </div>`;
+}
+
+function renderSalaryEditCard(s, sheet) {
+  return `<div class="card">
+    <h2>تعديل بيانات الراتب</h2>
+    <div class="salary-form">
+      <div class="field-s"><label>Basic Salary</label>
+        <input type="number" id="inp-basic" value="${s.basicSalary}"/></div>
+      <div class="field-s"><label>BONUS</label>
+        <input type="number" id="inp-bonus" value="${s.bonusVal}"/></div>
+      <div class="field-s"><label>KBI</label>
+        <input type="number" id="inp-kbi" value="${s.kbiVal}"/></div>
+      <button class="btn-save-sal" onclick="saveSalary('${sheet}')">💾 حفظ</button>
+    </div>
+  </div>`;
+}
+
+function renderDaysCard(rows, sheet) {
+  const rowsHtml = rows.map(r => {
+    const fri = r.day === "Friday";
+    const cls = fri ? "friday-row" : "";
+    const overSel = sel("over-" + r.rowIndex, OVER_OPTIONS, r.over, fri);
+    const dedSel  = sel("ded-"  + r.rowIndex, DED_OPTIONS,  r.deduction, fri);
+    return `<tr class="${cls}">
+      <td>${r.day}</td><td>${r.date}</td>
+      <td>${overSel}</td><td>${dedSel}</td>
+      <td><button class="btn-save-row" id="btn-${r.rowIndex}"
+        onclick="saveRow('${sheet}',${r.rowIndex})">حفظ</button></td>
+    </tr>`;
+  }).join('');
+  return `<div class="card days-table"><h2>أيام الشهر</h2>
+    <table><thead><tr>
+      <th>اليوم</th><th>التاريخ</th><th>Over</th><th>Deduction</th><th></th>
+    </tr></thead><tbody>${rowsHtml}</tbody></table></div>`;
+}
+
+function sel(id, options, current, dark) {
+  const style = dark ? 'style="background:#032423;color:#7ABEAA;border-color:#0D4A3A"' : '';
+  const opts = options.map(o =>
+    `<option value="${o}" ${o===current?'selected':''}>${o||'—'}</option>`
+  ).join('');
+  return `<select class="inline-sel" id="${id}" ${style}>${opts}</select>`;
+}
+
+// ==================== SAVE ====================
+async function saveRow(sheet, rowIndex) {
+  const btn = document.getElementById('btn-' + rowIndex);
+  btn.disabled = true; btn.textContent = "...";
+  try {
+    await apiPost({
+      action: "updateRow", sheetName: sheet, rowIndex,
+      over:      document.getElementById('over-' + rowIndex).value,
+      deduction: document.getElementById('ded-'  + rowIndex).value,
+    });
+    showToast("✅ اتحفظ!");
+  } catch(e) { showToast("❌ " + e.message); }
+  btn.disabled = false; btn.textContent = "حفظ";
+}
+
+async function saveSalary(sheet) {
+  try {
+    await apiPost({
+      action: "updateSalary", sheetName: sheet,
+      basicSalary: +document.getElementById('inp-basic').value,
+      bonus:       +document.getElementById('inp-bonus').value,
+      kbi:         +document.getElementById('inp-kbi').value,
+    });
+    showToast("✅ الراتب اتحفظ — أعد التحميل عشان ترى التحديث");
+  } catch(e) { showToast("❌ " + e.message); }
+}
+
+// ==================== HELPERS ====================
+function fmt(n) {
+  const num = parseFloat(n);
+  if (isNaN(num)) return n || "—";
+  return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
