@@ -20,7 +20,8 @@
   --blue-shadow:rgba(47,95,168,.30); --ink-shadow:rgba(28,26,25,.10);
   --glow:rgba(47,95,168,.16); --glow-2:rgba(47,95,168,.05);
   --header:rgba(244,243,241,.92); --ghost:#ffffff; --ghost-shadow:rgba(28,26,25,.14);
-  --on-accent:#ffffff; --scrim:rgba(15,14,13,.62); --hatch:rgba(28,26,25,.055);
+  --on-accent:#ffffff; --scrim:rgba(15,14,13,.62); --hatch:rgba(28,26,25,.055); --hatch2:rgba(28,26,25,.2); --fri-bg:#e6e3de;
+  --d-half:#c2577f; --d-single:#b23a3a; --d-off:#7d3fa6; --d-abs:#5a1626; --l-official:#2f8a6b; --l-exam:#5f6b78;
   --latin:'Archivo',sans-serif; --arabic:'Noto Kufi Arabic','Archivo',sans-serif;
   --ease:cubic-bezier(.16,1,.3,1);
   color-scheme:light;
@@ -32,7 +33,8 @@
   --blue-shadow:rgba(116,162,234,.22); --ink-shadow:rgba(0,0,0,.4);
   --glow:rgba(116,162,234,.13); --glow-2:rgba(116,162,234,.04);
   --header:rgba(18,17,16,.9); --ghost:#1d1b1a; --ghost-shadow:rgba(0,0,0,.5);
-  --on-accent:#121110; --scrim:rgba(0,0,0,.72); --hatch:rgba(241,239,236,.05);
+  --d-half:#ea8fb0; --d-single:#e5746f; --d-off:#b98ae0; --d-abs:#ff4d6d; --l-official:#5cc4a0; --l-exam:#9aa7b5;
+  --on-accent:#121110; --scrim:rgba(0,0,0,.72); --hatch:rgba(241,239,236,.05); --hatch2:rgba(241,239,236,.22); --fri-bg:#262321;
   color-scheme:dark;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -141,13 +143,21 @@ nav button.tab[aria-selected="true"]::after{transform:scaleX(1)}
 .total .big .cur{font-size:.16em;font-weight:800;letter-spacing:.2em;color:var(--blue);align-self:flex-start;margin-top:.9em}
 .total .rule-g{margin-top:16px}
 .total .note{margin-top:10px;font-size:12px;color:var(--muted)}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));border-top:2px solid var(--ink);margin-top:clamp(26px,4vw,40px)}
-.fact{padding:16px 16px 4px 0;border-inline-end:2px solid var(--line);padding-inline:16px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-top:2px solid var(--ink);margin-top:clamp(26px,4vw,40px)}
+.fact{padding:16px 16px 10px 0;border-inline-end:2px solid var(--line);padding-inline:16px}
 .fact:first-child{padding-inline-start:0}
 .fact:last-child{border-inline-end:0}
 .fact>span{display:block;font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
 :root[lang="ar"] .fact>span{letter-spacing:0;font-size:12px}
 .fact b{font-family:var(--latin);font-size:clamp(17px,2.2vw,22px);font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;direction:ltr;display:inline-block}
+.fact em{display:block;font-style:normal;font-size:11px;color:var(--muted-2);margin-top:2px;line-height:1.5}
+.fact .pen{font-style:normal;color:var(--blue);font-size:11px}
+.fin{display:block;width:100%;min-width:0;background:transparent;border:0;border-bottom:2px dashed var(--line);padding:0 0 1px;font-family:var(--latin);font-size:clamp(17px,2.2vw,22px);font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;direction:ltr;text-align:start;color:var(--ink);-moz-appearance:textfield;transition:border-color .2s}
+:root[dir="rtl"] .fin{text-align:end}
+.fin::-webkit-outer-spin-button,.fin::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.fin:hover{border-bottom-color:var(--blue)}
+.fin:focus{outline:none;border-bottom:2px solid var(--blue);color:var(--blue)}
+.fact.ed{cursor:text;display:block}
 .fact b.plus{color:var(--blue)} .fact b.minus{color:var(--red)}
 @media(max-width:620px){.facts{grid-template-columns:repeat(2,1fr)}.fact{border-bottom:2px solid var(--line);padding-block:12px}.fact:nth-child(odd){padding-inline-start:0}.fact:nth-child(even){border-inline-end:0}}
 
@@ -168,17 +178,20 @@ button:disabled{opacity:.5;cursor:default}
 .legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 :root[lang="ar"] .legend{letter-spacing:0;font-size:12px}
 .legend i{display:inline-block;width:10px;height:10px;margin-inline-end:6px;vertical-align:-1px}
-.map{display:grid;grid-template-columns:repeat(auto-fill,minmax(34px,1fr));gap:5px}
+.map{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:10px 5px}
+.mc{display:flex;flex-direction:column;gap:5px;min-width:0}
+.mc .cell{width:100%}
+.cd{font-size:9.5px;font-weight:700;text-align:center;color:var(--muted-2);white-space:nowrap;overflow:hidden;line-height:1.2;text-transform:uppercase;letter-spacing:.04em}
+:root[lang="ar"] .cd{letter-spacing:0;font-size:10px;text-transform:none}
+.mc.fri .cd{color:var(--ink);font-weight:800}
+.mc.today .cd{color:var(--blue);font-weight:800}
 .cell{aspect-ratio:1;display:grid;place-items:center;border:2px solid var(--line);background:var(--surface);font-family:var(--latin);font-size:12px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--muted-2);position:relative;transition:transform .2s var(--ease),border-color .2s,box-shadow .2s;padding:0}
 .cell:hover{transform:translateY(-4px);border-color:var(--ink);box-shadow:0 8px 16px var(--ink-shadow);z-index:2}
-.cell.fri{background:repeating-linear-gradient(135deg,var(--surface) 0 5px,var(--hatch) 5px 7px)}
-.cell.over{background:var(--blue);border-color:var(--blue);color:var(--on-accent)}
-.cell.ded{background:var(--red);border-color:var(--red);color:var(--on-accent)}
-.cell.leave{background:var(--amber);border-color:var(--amber);color:var(--on-accent)}
-.cell.both{background:linear-gradient(135deg,var(--blue) 0 50%,var(--red) 50% 100%);border-color:var(--ink);color:var(--on-accent)}
-.cell.today{border-color:var(--ink)}
-.cell.today::after{content:'';position:absolute;inset-inline:5px;bottom:-9px;height:3px;background:var(--ink)}
-@media(min-width:1000px){.map{grid-template-columns:repeat(var(--n,31),minmax(0,1fr))}.cell{aspect-ratio:3/4}}
+.cell.fri{background:repeating-linear-gradient(135deg,var(--fri-bg) 0 4px,var(--hatch2) 4px 6px);border-color:var(--muted-2);color:var(--ink)}
+.cell.f{background:var(--k);border-color:var(--k);color:var(--on-accent)}
+.cell.f.both{background:linear-gradient(135deg,var(--blue) 0 50%,var(--k) 50% 100%);border-color:var(--ink)}
+.cell.today{border-color:var(--ink);box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--blue)}
+@media(min-width:1000px){.map{grid-template-columns:repeat(var(--n,31),minmax(0,1fr))}.cell{aspect-ratio:4/5}}
 .progress{height:4px;background:var(--line);margin-top:20px;overflow:hidden}
 .fill{position:relative;display:block;height:100%;background:var(--blue);transform-origin:0 50%;overflow:hidden;transition:width .9s var(--ease)}
 :root[dir="rtl"] .fill{transform-origin:100% 50%}
@@ -206,14 +219,21 @@ button:disabled{opacity:.5;cursor:default}
 .ledger tbody tr{cursor:pointer;transition:background .15s}
 .ledger tbody tr:hover{background:var(--surface)}
 .ledger tbody tr:hover .dn{color:var(--blue)}
-.ledger tr.fri{background:repeating-linear-gradient(135deg,transparent 0 6px,var(--hatch) 6px 8px)}
+.ledger tr.fri{background:repeating-linear-gradient(135deg,var(--fri-bg) 0 6px,var(--hatch2) 6px 8px)}
+.ledger tr.fri .dn{color:var(--ink);font-weight:800}
 .ledger tr.today td:first-child{box-shadow:inset 4px 0 0 var(--ink)}
 :root[dir="rtl"] .ledger tr.today td:first-child{box-shadow:inset -4px 0 0 var(--ink)}
 .dn{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;transition:color .15s}
 :root[lang="ar"] .dn{letter-spacing:0;font-size:13.5px;font-weight:600}
 .dd{font-family:var(--latin);font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px;white-space:nowrap}
-.tag{display:inline-block;font-family:var(--latin);font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border:2px solid var(--blue);color:var(--blue);white-space:nowrap;direction:ltr}
-.tag.red{border-color:var(--red);color:var(--red)} .tag.amber{border-color:var(--amber);color:var(--amber)} .tag.mute{border-color:var(--line);color:var(--muted)}
+.k-over{--k:var(--blue)} .k-half{--k:var(--d-half)} .k-single{--k:var(--d-single)} .k-off{--k:var(--d-off)} .k-abs{--k:var(--d-abs)}
+.k-annual{--k:var(--amber)} .k-official{--k:var(--l-official)} .k-exam{--k:var(--l-exam)} .k-mute{--k:var(--muted-2)}
+.kc{color:var(--k)!important} .kf{background:var(--k)!important}
+.tag{display:inline-flex;align-items:stretch;font-family:var(--latin);font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border:2px solid var(--k,var(--blue));color:var(--k,var(--blue));white-space:nowrap;direction:ltr}
+.tag>span{padding:4px 8px}
+.tag>b{padding:4px 7px;background:var(--k,var(--blue));color:var(--on-accent);font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:0}
+.lg{background:var(--k)}
+.dot{display:inline-block;width:8px;height:8px;background:var(--k);margin-inline-end:7px}
 .plus-sign{color:var(--line);font-weight:800;font-size:16px}
 .ledger tbody tr:hover .plus-sign{color:var(--blue)}
 
@@ -232,6 +252,15 @@ button:disabled{opacity:.5;cursor:default}
 .bd-row .nm{font-family:var(--latin);font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
 .bd-row .c{direction:ltr;unicode-bidi:isolate;text-align:end;font-family:var(--latin);font-variant-numeric:tabular-nums;color:var(--muted)}
 .bd-row .m{direction:ltr;unicode-bidi:isolate;text-align:end;font-family:var(--latin);font-variant-numeric:tabular-nums;font-weight:800}
+.bd-row .nm small{display:block;font-family:inherit;font-size:10.5px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--muted-2);margin-top:1px}
+:root[lang="ar"] .bd-row .nm small{font-family:var(--arabic);font-size:11.5px}
+.eq{border:2px solid var(--ink);background:var(--surface)}
+.eq>div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);font-size:13.5px;font-weight:600}
+.eq>div b{font-family:var(--latin);font-weight:800;font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+.eq small{display:block;font-size:11.5px;font-weight:500;color:var(--muted-2)}
+.eq>.sum{border-bottom:0;border-top:2px solid var(--ink);background:var(--bg);font-weight:800}
+.eq>.sum b{font-size:22px;font-weight:900;letter-spacing:-.02em}
+.eq-note{margin-top:10px;font-size:12px;line-height:1.8;color:var(--muted)}
 .bd-item{border-bottom:1px solid var(--line);padding-bottom:7px}
 .bd-item.zero{opacity:.42}
 .track{height:4px;background:var(--line);overflow:hidden}
@@ -253,18 +282,18 @@ button:disabled{opacity:.5;cursor:default}
 .page-head{padding-block:clamp(34px,6vw,64px) 30px;border-bottom:2px solid var(--ink);display:flex;flex-direction:column;gap:14px;align-items:flex-start}
 .page-head h2{font-size:clamp(38px,6.4vw,78px);margin-top:10px}
 .page-head .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border-bottom:2px solid var(--ink)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));border-bottom:2px solid var(--ink)}
 .tile{padding:26px 22px 28px;border-inline-end:2px solid var(--line);min-width:0}
 .tile:first-child{padding-inline-start:0}
 .tile:last-child{border-inline-end:0}
 .tile>span{font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
 :root[lang="ar"] .tile>span{letter-spacing:0;font-size:12.5px}
-.tile b{display:block;font-family:var(--latin);font-size:clamp(28px,4vw,44px);font-weight:900;letter-spacing:-.035em;line-height:1.05;margin-top:6px;font-variant-numeric:tabular-nums;direction:ltr;text-align:start}
+.tile b{display:block;font-family:var(--latin);font-size:clamp(24px,2.6vw,36px);font-weight:900;letter-spacing:-.035em;line-height:1.05;margin-top:6px;font-variant-numeric:tabular-nums;direction:ltr;text-align:start}
 :root[dir="rtl"] .tile b{text-align:end}
 @media(max-width:640px){.tile{border-inline-end:0;border-bottom:2px solid var(--line);padding-inline:0}.tile:last-child{border-bottom:0}}
 .sect{padding-block:34px 44px;border-bottom:2px solid var(--line)}
 .table-wrap{overflow-x:auto}
-.yr-row{display:grid;grid-template-columns:150px minmax(0,1fr) 130px;gap:16px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);cursor:pointer;background:none;border-inline:0;border-top:0;width:100%;text-align:start;transition:padding .25s var(--ease),background .2s}
+.yr-row{display:grid;grid-template-columns:44px 210px minmax(0,1fr) 130px;gap:16px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);cursor:pointer;background:none;border-inline:0;border-top:0;width:100%;text-align:start;transition:padding .25s var(--ease),background .2s}
 .yr-row:hover{background:var(--surface);padding-inline:12px}
 .yr-row .mo{font-size:14px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
 :root[lang="ar"] .yr-row .mo{letter-spacing:0;font-weight:700}
@@ -272,11 +301,13 @@ button:disabled{opacity:.5;cursor:default}
 .yr-row .v{font-family:var(--latin);font-weight:900;font-size:18px;letter-spacing:-.02em;text-align:end;font-variant-numeric:tabular-nums;direction:ltr}
 .yr-row .track{height:10px}
 .yr-row.best .fill{background:linear-gradient(90deg,var(--blue),var(--amber))}
-@media(max-width:560px){.yr-row{grid-template-columns:96px minmax(0,1fr) 96px;gap:10px}.yr-row .v{font-size:15px}}
+.yr-row .mn{font-family:var(--latin);font-size:26px;font-weight:900;letter-spacing:-.03em;color:var(--blue);line-height:1}
+:root[lang="ar"] .yr-row .mo small{font-family:var(--arabic)}
+@media(max-width:700px){.yr-row{grid-template-columns:34px minmax(0,1fr) auto;gap:6px 10px}.yr-row .track{grid-column:1/-1;order:5}.yr-row .v{font-size:15px}.yr-row .mn{font-size:20px}}
 .balance{display:grid;grid-template-columns:repeat(15,minmax(0,1fr));gap:6px;max-width:720px}
 .balance i{aspect-ratio:1;border:2px solid var(--line);background:var(--surface);display:block}
 .balance i.a{background:var(--amber);border-color:var(--amber)}
-.balance i.o{background:repeating-linear-gradient(135deg,var(--amber) 0 4px,transparent 4px 7px);border-color:var(--amber)}
+.balance i.o{background:var(--l-official);border-color:var(--l-official)}
 .balance i.x{background:var(--red);border-color:var(--red)}
 @media(max-width:560px){.balance{grid-template-columns:repeat(8,minmax(0,1fr))}}
 .ledgers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border-bottom:2px solid var(--ink)}
@@ -285,7 +316,9 @@ button:disabled{opacity:.5;cursor:default}
 .led:nth-child(even){padding-inline-start:clamp(16px,3vw,40px)}
 .led:nth-child(n+3){border-top:2px solid var(--line)}
 @media(max-width:820px){.ledgers{grid-template-columns:minmax(0,1fr)}.led,.led:nth-child(odd),.led:nth-child(even){padding-inline:0;border-inline-end:0}.led:nth-child(n+2){border-top:2px solid var(--line)}}
-.led .row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;margin-bottom:8px}
+.led .row{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) auto;gap:8px;align-items:center;margin-bottom:8px}
+.led .row .date{grid-column:1/-1;margin-top:-4px}
+.inp.txt{font-family:inherit;font-weight:600;direction:inherit}
 .led .date{font-family:var(--latin);font-size:11px;color:var(--muted-2);white-space:nowrap}
 .led .x{width:42px;height:42px;border:2px solid var(--line);background:transparent;color:var(--muted);font-weight:800;transition:all .2s}
 .led .x:hover{border-color:var(--red);color:var(--red)}
@@ -334,12 +367,18 @@ button:disabled{opacity:.5;cursor:default}
 :root[lang="ar"] .grp h4{letter-spacing:0;font-size:12.5px}
 .grp h4::after{content:'';flex:1;height:2px;background:var(--line)}
 .tgls{display:flex;flex-wrap:wrap;gap:7px}
-.tgl{font-family:var(--latin);font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:10px 12px;background:var(--surface);border:2px solid var(--line);direction:ltr;transition:transform .15s,border-color .15s,background .15s,color .15s,box-shadow .2s}
-.tgl:hover{border-color:var(--ink);transform:translateY(-2px)}
-.tgl[aria-pressed="true"]{color:var(--on-accent);transform:translateY(-2px)}
-.tgl.p[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);box-shadow:0 8px 18px var(--blue-shadow)}
-.tgl.m[aria-pressed="true"]{background:var(--red);border-color:var(--red)}
-.tgl.l[aria-pressed="true"]{background:var(--amber);border-color:var(--amber)}
+.tgl{display:inline-flex;align-items:stretch;font-family:var(--latin);font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:0;background:var(--surface);border:2px solid var(--line);direction:ltr;transition:transform .15s,border-color .15s,background .15s,color .15s,box-shadow .2s}
+.tgl>span{padding:10px 11px}
+.tgl>b{padding:10px 8px;border-inline-start:2px solid var(--line);color:var(--k);font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:0;transition:inherit}
+.tgl:hover{border-color:var(--k,var(--ink));transform:translateY(-2px)}
+.tgl[aria-pressed="true"]{background:var(--k);border-color:var(--k);color:var(--on-accent);transform:translateY(-2px);box-shadow:0 8px 18px var(--ink-shadow)}
+.tgl[aria-pressed="true"]>b{color:var(--on-accent);border-color:var(--on-accent)}
+.gh{font-size:11.5px;color:var(--muted-2);margin-top:-4px}
+.hbox{border:2px solid var(--line);background:var(--surface);padding:10px}
+.hbox label{color:var(--ink)!important;font-size:12px!important;letter-spacing:0!important;text-transform:none!important;font-weight:700!important}
+.hbox label .lat{color:var(--blue);font-weight:900}
+.hbox em{font-style:normal;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.hbox .inp{background:var(--bg)}
 .hrs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .impact{border:2px solid var(--ink);background:var(--surface);padding:12px 14px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 :root[lang="ar"] .impact{letter-spacing:0;font-size:13px}
@@ -420,12 +459,13 @@ function calcMonth(m){
   });
   const basic=+m.basic||0,kbi=+m.kbi||0,bonus=+m.bonus||0,rate=basic/26;
   const over=[
-    {name:"Friday",n:c.friday,days:c.friday*2},{name:"Double Paid",n:c.double,days:c.double*2},
-    {name:"Over 4H D",n:c.o4d,days:c.o4d},{name:"Over Per Hours D",n:c.hoursD,days:c.hoursD*2/8},
-    {name:"Over Time 4H",n:c.ot4,days:c.ot4*0.75},{name:"Over Time 6H",n:c.ot6,days:c.ot6*1.125},
-    {name:"Over Time 8H",n:c.ot8,days:c.ot8*1.5},{name:"Over Per Hours",n:c.hoursO,days:c.hoursO*1.5/8}];
+    {name:"Friday",n:c.friday,days:c.friday*2,per:2},{name:"Double Paid",n:c.double,days:c.double*2,per:2},
+    {name:"Over 4H D",n:c.o4d,days:c.o4d,per:1},{name:"Over Per Hours D",n:c.hoursD,days:c.hoursD*2/8,per:0.25,h:1},
+    {name:"Over Time 4H",n:c.ot4,days:c.ot4*0.75,per:0.75},{name:"Over Time 6H",n:c.ot6,days:c.ot6*1.125,per:1.125},
+    {name:"Over Time 8H",n:c.ot8,days:c.ot8*1.5,per:1.5},{name:"Over Per Hours",n:c.hoursO,days:c.hoursO*1.5/8,per:0.1875,h:1}];
+  over.forEach(o=>o.k="over");
   const aN=c.absence-c.compA,oN=c.dayoff-c.compD;
-  const ded=[{name:"Absence",n:aN,days:aN*3},{name:"Day Off",n:oN,days:oN*2},{name:"Single Day",n:c.single,days:c.single},{name:"Half Day",n:c.half,days:c.half*0.5}];
+  const ded=[{name:"Absence",n:aN,days:aN*3,per:3,k:"abs"},{name:"Day Off",n:oN,days:oN*2,per:2,k:"off"},{name:"Single Day",n:c.single,days:c.single,per:1,k:"single"},{name:"Half Day",n:c.half,days:c.half*0.5,per:0.5,k:"half"}];
   over.forEach(o=>o.money=o.days*rate);ded.forEach(o=>o.money=o.days*rate);
   const overDays=over.reduce((a,o)=>a+o.days,0),dedDays=ded.reduce((a,o)=>a+o.days,0);
   const computed=basic+kbi+bonus+(overDays-dedDays)*rate;
@@ -442,17 +482,20 @@ ar:{brand:"دفتر المرتب",month:"الشهر",leave:"الإجازات",ye
  user:"اسم المستخدم",pass:"كلمة السر",enter:"دخول",entering:"بيدخل…",demo:"جرّب نسخة تجريبية",url:"رابط الـ Web app",
  fineLogin:"اليوزر والباسورد من تاب My user في الشيت.",demoBar:"بيانات تجريبية · مفيش حاجة بتتحفظ",
  period:"فترة المرتب",total:"صافي المرتب",fromSheet:"الرقم من خلية G1 في الشيت · المحسوب",
- gross:"الأساسي + KBI",overs:"الإضافي",deds:"الخصومات",rate:"اليومية",last:"الشهر اللي فات",bonus:"بونص",
+ gross:"الأساسي + KBI",basicLbl:"الأساسي",basicNote:"عليه بيتحسب الإضافي والخصم",addNote:"بيتضاف زي ما هو",rateNote:"الأساسي ÷ 26",editHint:"دوس على الرقم وعدّله",how:"الحساب",dayU:"يوم",
+ perU:x=>"الواحدة = "+x+" يوم",perH:x=>"الساعة = "+x+" يوم",perD:x=>"اليوم = خصم "+x+" يوم",
+ eqNote:r=>"اليومية = الأساسي ÷ 26 = "+r+" · الإضافي والخصم بيتحسبوا على الأساسي بس. الـ KBI والبونص بيتضافوا زي ما هم.",
+ hD:"الساعة بساعتين",hO:"الساعة بساعة ونص",hHint:"اكتب عدد الساعات",overW:"الرقم = بكام يوم",cutW:"الرقم = كام يوم بيتخصم",overs:"الإضافي",deds:"الخصومات",rate:"اليومية",last:"الشهر اللي فات",bonus:"بونص",
  map:"خريطة الشهر",dayOf:(a,b)=>"اليوم "+a+" من "+b,done:"الشهر خلص",notStarted:"لسه ما بدأش",
  lgOver:"إضافي",lgDed:"خصم",lgLeave:"إجازة",lgFri:"جمعة",
  days:"الأيام",tap:"دوس على اليوم عشان تسجّل",day:"اليوم",date:"التاريخ",
  pay:"المرتب",payHint:"بيتكتب في M1 · N3 · M3",item:"البند",count:"العدد",byDay:"أيام",money:"فلوس",sum:"الإجمالي",
  leaveSec:"إجازات الشهر",newMonth:"شهر جديد",confirmNew:"تأكيد: شيت جديد",made:n=>"اتعمل شيت "+n,
  noMonths:"مفيش شهور في الشيت",noMonthsSub:"افتح أول شهر. هيتعمل شيت جديد من Template 2026.",
- leaveTitle:"الإجازات",balance:"الرصيد",of15:"من 15 يوم",remaining:"الباقي",overLimit:"زيادة عن الرصيد",noLeave:"مفيش إجازات متسجلة في السنة دي.",type:"النوع",
+ leaveTitle:"الإجازات",balance:"الرصيد",of15:"من 15 يوم",notCounted:"مش من الرصيد",balHint:"الرصيد 15 يوم Annual بس",remaining:"الباقي",overLimit:"زيادة عن الرصيد",noLeave:"مفيش إجازات متسجلة في السنة دي.",type:"النوع",
  yearTitle:"حساب السنة",yearTotal:n=>"إجمالي "+n+" شهر",avg:"متوسط الشهر",best:"أعلى شهر",byMonth:"شهر بشهر",
  debtsTitle:"الديون والجمعية",mine:"ديوني",owed:"ديون ليا",net:"الصافي",
- L:"ديوني بالتفاصيل",M:"ديون ليا",J:"اصحاب الديون",F:"سلفه",add:"إضافة",none:"مفيش حاجة متسجلة.",newAmt:"اكتب المبلغ واضغط Enter",sure:"تأكيد المسح",
+ L:"ديوني بالتفاصيل",M:"ديون ليا",J:"اصحاب الديون",F:"سلفه",add:"إضافة",none:"مفيش حاجة متسجلة.",newAmt:"المبلغ",who:"لمين / البيان",sure:"تأكيد المسح",
  gam:"الجمعية",gamHint:"دوس على القسط لما يتدفع",paid:"المدفوع",left:"الباقي",PAID:"PAID",
  over1:"الإضافي · اختيار واحد",orD:"أو ساعات ×2",orO:"أو ساعات ×1.5",compH:"ساعات التعويض (فاضي = يوم كامل)",cut:"خصم",free:"إجازة من غير خصم",
  impact:"أثر اليوم على المرتب",save:"حفظ في الشيت",clear:"فضّي اليوم",cancel:"إلغاء",logout:"خروج",refresh:"تحديث",noDebts:"مفيش تاب اسمه «ديون» في الشيت.",
@@ -464,17 +507,20 @@ en:{brand:"Pay Ledger",month:"Month",leave:"Leave",year:"Year",debts:"Debts",
  user:"Username",pass:"Password",enter:"Enter",entering:"Entering…",demo:"Try the demo",url:"Web app URL",
  fineLogin:"Username and password come from the My user tab.",demoBar:"Demo data · nothing is saved",
  period:"Pay period",total:"Total salary",fromSheet:"Read from cell G1 · computed",
- gross:"Basic + KBI",overs:"Overs",deds:"Deductions",rate:"Day rate",last:"Last month",bonus:"Bonus",
+ gross:"Basic + KBI",basicLbl:"Basic",basicNote:"Overs and deductions are based on it",addNote:"Added as is",rateNote:"Basic ÷ 26",editHint:"Tap a number to edit",how:"The maths",dayU:"days",
+ perU:x=>"each = "+x+" days",perH:x=>"1 hour = "+x+" days",perD:x=>"1 day = −"+x+" days",
+ eqNote:r=>"Day rate = Basic ÷ 26 = "+r+" · Overs and deductions use Basic only. KBI and bonus are added as they are.",
+ hD:"Hour paid ×2",hO:"Hour paid ×1.5",hHint:"Type the number of hours",overW:"number = days earned",cutW:"number = days deducted",overs:"Overs",deds:"Deductions",rate:"Day rate",last:"Last month",bonus:"Bonus",
  map:"Period map",dayOf:(a,b)=>"Day "+a+" of "+b,done:"Period closed",notStarted:"Not started",
  lgOver:"Over",lgDed:"Deduction",lgLeave:"Leave",lgFri:"Friday",
  days:"Days",tap:"Tap a day to log it",day:"Day",date:"Date",
  pay:"Pay",payHint:"Writes to M1 · N3 · M3",item:"Item",count:"Count",byDay:"Days",money:"Money",sum:"Total",
  leaveSec:"Leave this month",newMonth:"New month",confirmNew:"Confirm: new sheet",made:n=>"Created "+n,
  noMonths:"No months in the sheet",noMonthsSub:"Open the first month. A new sheet is copied from Template 2026.",
- leaveTitle:"Leave",balance:"Balance",of15:"of 15 days",remaining:"Remaining",overLimit:"Over the balance",noLeave:"No leave logged this year.",type:"Type",
+ leaveTitle:"Leave",balance:"Balance",of15:"of 15 days",notCounted:"not counted",balHint:"The 15 days are Annual only",remaining:"Remaining",overLimit:"Over the balance",noLeave:"No leave logged this year.",type:"Type",
  yearTitle:"Year-end account",yearTotal:n=>"Total of "+n+" months",avg:"Monthly average",best:"Best month",byMonth:"Month by month",
  debtsTitle:"Debts & savings circle",mine:"I owe",owed:"Owed to me",net:"Net",
- L:"What I owe",M:"Owed to me",J:"Creditors",F:"Advance",add:"Add",none:"Nothing logged.",newAmt:"Type the amount, press Enter",sure:"Confirm delete",
+ L:"What I owe",M:"Owed to me",J:"Creditors",F:"Advance",add:"Add",none:"Nothing logged.",newAmt:"Amount",who:"Who / note",sure:"Confirm delete",
  gam:"Savings circle",gamHint:"Tap an instalment once it is paid",paid:"Paid",left:"Left",PAID:"PAID",
  over1:"Over · pick one",orD:"or hours ×2",orO:"or hours ×1.5",compH:"Compensation hours (empty = full day)",cut:"Deduction",free:"Leave, no deduction",
  impact:"This day changes pay by",save:"Save to sheet",clear:"Clear day",cancel:"Cancel",logout:"Sign out",refresh:"Refresh",noDebts:"No tab named «ديون» in the sheet.",
@@ -483,6 +529,7 @@ en:{brand:"Pay Ledger",month:"Month",leave:"Leave",year:"Year",debts:"Debts",
 const MN={ar:["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"],
           en:["January","February","March","April","May","June","July","August","September","October","November","December"]};
 const DN={ar:["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"],en:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]};
+const DS={ar:["أحد","اثنين","ثلاثاء","أربعاء","خميس","جمعة","سبت"],en:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]};
 const DNL={ar:DN.ar,en:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]};
 
 /* ===== الحالة ===== */
@@ -563,7 +610,7 @@ function buildDemo(){
       rows.push({r:r++,date:iso(d),over:past&&!fri?plan[0][ix%15]:(past&&fri&&ix%4===0?"Friday":""),ded:past&&!fri?plan[1][(ix*2+i)%15]:""});ix++;d.setDate(d.getDate()+1);}
     rows.forEach(x=>{if(x.over==="Friday"&&fromIso(x.date).getDay()!==5)x.over="";if(x.over&&DED_CUT.includes(x.ded))x.ded="";});
     ms.push({name:MN.en[mm-1].slice(0,3)+" "+yy,key:yy+"-"+pad(mm),basic:9000,kbi:500,bonus:i===2?400:0,rows,total:null,last:null});}
-  const debts={cols:{L:[{r:2,v:3500},{r:3,v:1200}],M:[{r:2,v:6000}],J:[{r:2,v:800,date:iso(new Date())}],F:[]},totals:{},gam:[]};
+  const debts={cols:{L:[{r:2,v:3500,note:"Demo A"},{r:3,v:1200,note:"Demo B"}],M:[{r:2,v:6000,note:"Demo C"}],J:[{r:2,v:800,note:"",date:iso(new Date())}],F:[]},totals:{},gam:[]};
   const now=new Date();for(let i=0;i<10;i++){const dd=new Date(now.getFullYear(),now.getMonth()-3+i,5);debts.gam.push({i,date:iso(dd),amount:2000,paid:i<3});}
   DEMO={months:ms,debts};demoFix();
 }
@@ -576,7 +623,7 @@ async function demoCall(action,p){
   if(action==="setField"){const m=D.months.find(x=>x.name===p.sheet);m[p.field]=+p.value;demoFix();return {ok:true,month:m};}
   if(action==="newMonth"){const l=D.months[D.months.length-1];let y=yearOf(l),mm=monOf(l)+1;if(mm>12){mm=1;y++;}const rows=[],d=new Date(y,mm-2,26),end=new Date(y,mm-1,25);let r=3;while(d<=end){rows.push({r:r++,date:iso(d),over:"",ded:""});d.setDate(d.getDate()+1);}
     D.months.push({name:MN.en[mm-1].slice(0,3)+" "+y,key:y+"-"+pad(mm),basic:l.basic,kbi:l.kbi,bonus:0,rows,total:null,last:null});demoFix();}
-  if(action==="setDebt"){const a=D.debts.cols[p.col];if(p.row){const i=a.findIndex(x=>x.r===p.row);if(p.value==="")a.splice(i,1);else a[i].v=+p.value;}else{const r=(a.length?Math.max(...a.map(x=>x.r)):1)+1;const it={r,v:+p.value};if(p.col==="J")it.date=iso(new Date());a.push(it);}demoFix();return {ok:true,debts:D.debts};}
+  if(action==="setDebt"){const a=D.debts.cols[p.col];if(p.row){const i=a.findIndex(x=>x.r===p.row);if(p.value==="")a.splice(i,1);else{if("value" in p)a[i].v=+p.value;if("note" in p)a[i].note=p.note;}}else{const r=(a.length?Math.max(...a.map(x=>x.r)):1)+1;const it={r,v:+p.value,note:p.note||""};if(p.col==="J")it.date=iso(new Date());a.push(it);}demoFix();return {ok:true,debts:D.debts};}
   if(action==="setGam"){D.debts.gam.find(x=>x.i===p.i).paid=p.paid;return {ok:true,debts:D.debts};}
   return {ok:true,months:D.months,debts:D.debts};
 }
@@ -620,14 +667,25 @@ function viewLogin(){
   +'<div class="acts"><button class="btn-solid mag" type="submit" id="btn-enter"'+(S.busy?" disabled":"")+"><span>"+t(S.busy?"entering":"enter")+'</span><span class="flip">&rarr;</span></button><button class="btn-outline mag" type="button" data-act="demo">'+t("demo")+"</button></div>"
   +"</form><div class=\"ghost\">HN</div></div></div>";
 }
-function tagOver(s){if(!s)return "";const k=classify(s).t;return '<span class="tag'+(k==="other"?" mute":k==="exam"?" amber":"")+'">'+esc(s)+"</span>";}
-function tagDed(s){return s?'<span class="tag '+(LEAVE.includes(s)?"amber":"red")+'">'+esc(s)+"</span>":"";}
-function cellClass(d){const o=classify(d.over).t,hasO=o!=="none"&&o!=="other"&&o!=="exam",cut=DED_CUT.includes(d.ded),lv=LEAVE.includes(d.ded)||o==="exam";
-  return hasO&&cut?"both":cut?"ded":hasO?"over":lv?"leave":"";}
-function bdBlock(arr,color,sign){
+const WT={"Friday":2,"Double Paid":2,"Over 4H D":1,"Over Time 4H":0.75,"Over Time 6H":1.125,"Over Time 8H":1.5};
+const DW={"Absence":[-3,"abs"],"Day Off":[-2,"off"],"Single Day":[-1,"single"],"Half Day":[-0.5,"half"],"Annual":[0,"annual"],"Official holiday":[0,"official"],"Exam":[0,"exam"]};
+function overInfo(s){const k=classify(s);if(k.t==="none")return null;
+  if(k.t==="fixed")return {d:WT[k.name],c:"over"};
+  if(k.t==="hD")return {d:k.h*2/8,c:"over"};if(k.t==="hO")return {d:k.h*1.5/8,c:"over"};
+  if(k.t==="compA")return {d:(k.h?k.h/8:1)*3,c:"over"};if(k.t==="compD")return {d:(k.h?k.h/8:1)*2,c:"over"};
+  if(k.t==="exam")return {d:0,c:"exam"};return {d:null,c:"mute"};}
+function dedInfo(s){if(!s)return null;const x=DW[s];return x?{d:x[0],c:x[1]}:{d:null,c:"mute"};}
+const wtxt=d=>d==null?"":(d>0?"+":d<0?"−":"")+qty(Math.abs(d));
+function tag(s,inf){return inf?'<span class="tag k-'+inf.c+'"><span>'+esc(s)+"</span>"+(inf.d!=null?"<b>"+wtxt(inf.d)+"</b>":"")+"</span>":"";}
+function tagOver(s){return tag(s,overInfo(s));}
+function tagDed(s){return tag(s,dedInfo(s));}
+function cellClass(d){const o=overInfo(d.over),x=dedInfo(d.ded);
+  if(x&&x.c!=="mute")return "f k-"+x.c+(o&&o.c==="over"?" both":"");
+  if(o&&o.c!=="mute")return "f k-"+o.c;return "";}
+function bdBlock(arr,sign){
   const mx=Math.max(1,...arr.map(o=>Math.abs(o.money)));
   return '<div class="bd"><div class="bd-head"><span>'+t("item")+"</span><span>"+t("count")+"</span><span>"+t("byDay")+"</span><span>"+t("money")+"</span></div>"
-  +arr.map(o=>'<div class="bd-item'+(o.n?"":" zero")+'"><div class="bd-row"><span class="nm">'+o.name+'</span><span class="c">'+qty(o.n)+'</span><span class="c">'+qty(o.days)+'</span><span class="m '+(o.money?color:"")+'">'+(o.money?(o.money>0?sign:(sign==="−"?"+":"−")):"")+money(Math.abs(o.money))+'</span></div><div class="track"><span class="fill '+(color==="red"?"red":"")+'" style="width:'+(Math.abs(o.money)/mx*100).toFixed(1)+'%"></span></div></div>').join("")+"</div>";
+  +arr.map(o=>'<div class="bd-item k-'+o.k+(o.n?"":" zero")+'"><div class="bd-row"><span class="nm"><i class="dot"></i>'+o.name+"<small>"+(o.k==="over"?t(o.h?"perH":"perU")(qty(o.per)):t("perD")(qty(o.per)))+'</small></span><span class="c">'+qty(o.n)+'</span><span class="c">'+qty(o.days)+'</span><span class="m'+(o.money?" kc":"")+'">'+(o.money?(o.money>0?sign:(sign==="−"?"+":"−")):"")+money(Math.abs(o.money))+'</span></div><div class="track"><span class="fill kf" style="width:'+(Math.abs(o.money)/mx*100).toFixed(1)+'%"></span></div></div>').join("")+"</div>";
 }
 function viewMonth(){
   if(!S.months.length||!S.cur)return '<div class="wrap"><div class="empty-state"><div class="eyebrow">'+t("month")+'</div><h2 class="display" style="font-size:clamp(34px,6vw,64px)">'+t("noMonths")+'</h2><p class="sub">'+t("noMonthsSub")+'</p><button class="btn-solid mag" data-act="new-month">+ '+t("newMonth")+"</button></div></div>";
@@ -638,7 +696,9 @@ function viewMonth(){
   if(pos>=0){prog=(pos+1)/n;progTxt=t("dayOf")(pos+1,n);}else if(first&&today<first.date){prog=0;progTxt=t("notStarted");}else{prog=1;progTxt=t("done");}
   const tot=money(r.total).split(".");
   const dayImpact=d=>{const one=calcMonth({basic:m.basic,rows:[d]});return (one.overDays-one.dedDays)*r.rate;};
-  const cells=m.rows.map((d,ix)=>{const dt=fromIso(d.date);return '<button class="cell '+cellClass(d)+(dt.getDay()===5?" fri":"")+(d.date===today?" today":"")+'" style="--c:'+ix+'" data-row="'+d.r+'" title="'+DNL[S.lang][dt.getDay()]+" "+dm(d.date)+(d.over?" · "+esc(d.over):"")+(d.ded?" · "+esc(d.ded):"")+'" aria-label="'+dmy(d.date)+'">'+dt.getDate()+"</button>";}).join("");
+  const fe=(f,lbl,note)=>'<label class="fact ed" for="h-'+f+'"><span>'+lbl+' <i class="pen">✎</i></span><input class="fin" id="h-'+f+'" type="number" inputmode="decimal" step="any" data-mf="'+f+'" value="'+(+m[f]||0)+'"><em>'+note+"</em></label>";
+  const LG=[["over",t("lgOver")],["half","Half Day −0.5"],["single","Single Day −1"],["off","Day Off −2"],["abs","Absence −3"],["annual","Annual"],["official","Official holiday"],["exam","Exam"]];
+  const cells=m.rows.map((d,ix)=>{const dt=fromIso(d.date);return '<div class="mc'+(dt.getDay()===5?" fri":"")+(d.date===today?" today":"")+'"><button class="cell '+cellClass(d)+(dt.getDay()===5?" fri":"")+(d.date===today?" today":"")+'" style="--c:'+ix+'" data-row="'+d.r+'" title="'+DNL[S.lang][dt.getDay()]+" "+dm(d.date)+(d.over?" · "+esc(d.over):"")+(d.ded?" · "+esc(d.ded):"")+'" aria-label="'+dmy(d.date)+'">'+dt.getDate()+'</button><span class="cd">'+DS[S.lang][dt.getDay()]+"</span></div>";}).join("");
   const rows=m.rows.map(d=>{const dt=fromIso(d.date),im=dayImpact(d);
     return '<tr data-row="'+d.r+'" tabindex="0" class="'+(dt.getDay()===5?"fri ":"")+(d.date===today?"today":"")+'"><td><span class="dn">'+DN[S.lang][dt.getDay()]+'</span></td><td><span class="dd">'+dm(d.date)+'</span></td><td>'+(tagOver(d.over)||'<span class="plus-sign">+</span>')+"</td><td>"+tagDed(d.ded)+'</td><td style="text-align:end"><span class="n '+(im>0?"blue":im<0?"red":"")+'" style="font-size:12px;font-weight:700">'+(Math.abs(im)>0.004?sgn(im):"")+"</span></td></tr>";}).join("");
   return '<section class="stage"><div class="ghost" id="ghost">'+pad(monOf(m))+'</div><div class="wrap hero">'
@@ -646,15 +706,19 @@ function viewMonth(){
   +'<h1 class="display">'+letters(MN[S.lang][monOf(m)-1])+'<span class="yr rv" style="--i:4">'+yearOf(m)+"</span></h1>"
   +'<div class="month-nav rv" style="--i:2"><button class="sq" data-act="prev" aria-label="prev" '+(i<=0?"disabled":"")+'><span class="flip">&larr;</span></button><select id="month-pick" aria-label="'+t("month")+'">'+S.months.map(x=>'<option value="'+x.key+'"'+(x===m?" selected":"")+">"+esc(x.name)+"</option>").join("")+'</select><button class="sq" data-act="next" aria-label="next" '+(i>=S.months.length-1?"disabled":"")+'><span class="flip">&rarr;</span></button><button class="btn-outline btn-sm mag" data-act="new-month">+ '+t("newMonth")+"</button></div>"
   +'<div class="total-row"><div class="total rv" style="--i:3"><div class="lbl">'+t("total")+'</div><div class="big"><span>'+cnt("total",r.total)+'</span><span class="cur">EGP</span></div><span class="rule-g"></span>'+(r.differs?'<div class="note">'+t("fromSheet")+' <span class="n">'+money(r.computed)+"</span></div>":"")+"</div></div>"
-  +'<div class="facts rv" style="--i:5"><div class="fact"><span>'+t("gross")+"</span><b>"+money(r.gross)+'</b></div><div class="fact"><span>'+t("overs")+'</span><b class="plus">'+cnt("ov",r.overMoney,"s")+'</b></div><div class="fact"><span>'+t("deds")+'</span><b class="'+(r.dedMoney>0?"minus":"")+'">'+cnt("dd",-r.dedMoney,"s")+'</b></div>'+(r.bonus?'<div class="fact"><span>'+t("bonus")+'</span><b class="plus">+'+money(r.bonus)+"</b></div>":"")+'<div class="fact"><span>'+t("rate")+"</span><b>"+money(r.rate)+'</b></div><div class="fact"><span>'+t("last")+"</span><b>"+(ls==null?"—":money(ls))+"</b></div></div>"
+  +'<div class="facts rv" style="--i:5">'+fe("basic",t("basicLbl"),t("basicNote"))+'<div class="fact"><span>'+t("rate")+"</span><b>"+money(r.rate)+"</b><em>"+t("rateNote")+"</em></div>"+fe("kbi","KBI",t("addNote"))+fe("bonus",t("bonus"),t("addNote"))+'<div class="fact"><span>'+t("overs")+'</span><b class="plus">'+cnt("ov",r.overMoney,"s")+'</b><em><span class="n">'+qty(r.overDays)+"</span> "+t("dayU")+' × <span class="n">'+money(r.rate)+'</span></em></div><div class="fact"><span>'+t("deds")+'</span><b class="'+(r.dedMoney>0?"minus":"")+'">'+cnt("dd",-r.dedMoney,"s")+'</b><em><span class="n">'+qty(r.dedDays)+"</span> "+t("dayU")+' × <span class="n">'+money(r.rate)+'</span></em></div><div class="fact"><span>'+t("last")+"</span><b>"+(ls==null?"—":money(ls))+"</b></div></div>"
   +"</div></section>"
-  +'<div class="wrap"><section class="band rv" style="--i:6"><div class="band-head"><div class="eyebrow">'+t("map")+' · <span class="n">'+progTxt+'</span></div><div class="legend"><span><i style="background:var(--blue)"></i>'+t("lgOver")+'</span><span><i style="background:var(--red)"></i>'+t("lgDed")+'</span><span><i style="background:var(--amber)"></i>'+t("lgLeave")+'</span><span><i style="background:repeating-linear-gradient(135deg,var(--line) 0 3px,transparent 3px 5px);border:1px solid var(--line)"></i>'+t("lgFri")+'</span></div></div><div class="map" style="--n:'+n+'">'+cells+'</div><div class="progress"><span class="fill grad" style="width:'+(prog*100).toFixed(1)+'%"></span></div></section>'
+  +'<div class="wrap"><section class="band rv" style="--i:6"><div class="band-head"><div class="eyebrow">'+t("map")+' · <span class="n">'+progTxt+'</span></div><div class="legend">'+LG.map(x=>'<span class="k-'+x[0]+'"><i class="lg"></i>'+x[1]+"</span>").join("")+'<span><i style="background:repeating-linear-gradient(135deg,var(--fri-bg) 0 3px,var(--hatch2) 3px 5px);border:1px solid var(--muted-2)"></i>'+t("lgFri")+"</span>"+'</div></div><div class="map" style="--n:'+n+'">'+cells+'</div><div class="progress"><span class="fill grad" style="width:'+(prog*100).toFixed(1)+'%"></span></div></section>'
   +'<div class="cols"><div class="col main"><div class="sec-h rv"><span class="num">01</span><h3>'+t("days")+'</h3><span class="hint">'+t("tap")+'</span></div><div class="table-wrap rv" style="--i:1"><table class="ledger"><thead><tr><th>'+t("day")+"</th><th>"+t("date")+'</th><th>Over</th><th>Deductions</th><th style="text-align:end">±</th></tr></thead><tbody>'+rows+"</tbody></table></div></div>"
   +'<div class="col side">'
-  +'<section class="rv" style="--i:1"><div class="sec-h"><span class="num">02</span><h3>'+t("pay")+'</h3><span class="hint">'+t("payHint")+'</span></div><div class="fields">'+[["basic","Basic Salary"],["kbi","KBI"],["bonus","Bonus"]].map(f=>'<div class="field"><label for="f-'+f[0]+'">'+f[1]+'</label><input class="inp" id="f-'+f[0]+'" type="number" inputmode="decimal" step="any" data-mf="'+f[0]+'" value="'+(+m[f[0]]||0)+'"></div>').join("")+"</div></section>"
-  +'<section class="rv" style="--i:2"><div class="sec-h"><span class="num">03</span><h3>'+t("overs")+"</h3></div>"+bdBlock(r.over,"blue","+")+'<div class="bd-total"><span>'+t("sum")+' · <span class="n">'+qty(r.overDays)+'</span></span><b class="blue">'+sgn(r.overMoney,"+")+"</b></div></section>"
-  +'<section class="rv" style="--i:3"><div class="sec-h red"><span class="num">04</span><h3>'+t("deds")+'</h3><span class="hint lat">Absence ×3 · Day Off ×2</span></div>'+bdBlock(r.ded,"red","−")+'<div class="bd-total"><span>'+t("sum")+' · <span class="n">'+qty(r.dedDays)+'</span></span><b class="'+(r.dedMoney>0?"red":"")+'">'+sgn(-r.dedMoney)+"</b></div></section>"
-  +'<section class="rv" style="--i:4"><div class="sec-h amber"><span class="num">05</span><h3>'+t("leaveSec")+'</h3></div><div class="trio"><div><b class="amber">'+r.c.annual+"</b><span>Annual</span></div><div><b>"+r.c.official+"</b><span>Official holiday</span></div><div><b>"+r.c.exam+"</b><span>Exams</span></div></div></section>"
+  +'<section class="rv" style="--i:1"><div class="sec-h"><span class="num">02</span><h3>'+t("how")+'</h3><span class="hint">'+t("editHint")+'</span></div><div class="eq">'
+  +'<div><span>'+t("basicLbl")+'</span><b>'+money(m.basic)+'</b></div><div><span>+ KBI</span><b>'+money(m.kbi)+'</b></div><div><span>+ '+t("bonus")+'</span><b>'+money(m.bonus)+'</b></div>'
+  +'<div class="k-over"><span>+ '+t("overs")+' <small><span class="n">'+qty(r.overDays)+"</span> "+t("dayU")+' × <span class="n">'+money(r.rate)+'</span></small></span><b class="kc">'+sgn(r.overMoney,"+")+'</b></div>'
+  +'<div class="k-single"><span>− '+t("deds")+' <small><span class="n">'+qty(r.dedDays)+"</span> "+t("dayU")+' × <span class="n">'+money(r.rate)+'</span></small></span><b class="'+(r.dedMoney>0?"kc":"")+'">'+sgn(-r.dedMoney,"−")+'</b></div>'
+  +'<div class="sum"><span>= '+t("total")+'</span><b>'+money(r.computed)+'</b></div></div><p class="eq-note">'+t("eqNote")(money(r.rate))+"</p></section>"
+  +'<section class="rv" style="--i:2"><div class="sec-h"><span class="num">03</span><h3>'+t("overs")+"</h3></div>"+bdBlock(r.over,"+")+'<div class="bd-total"><span>'+t("sum")+' · <span class="n">'+qty(r.overDays)+"</span> "+t("dayU")+'</span><b class="blue">'+sgn(r.overMoney,"+")+"</b></div></section>"
+  +'<section class="rv" style="--i:3"><div class="sec-h red"><span class="num">04</span><h3>'+t("deds")+"</h3></div>"+bdBlock(r.ded,"−")+'<div class="bd-total"><span>'+t("sum")+' · <span class="n">'+qty(r.dedDays)+"</span> "+t("dayU")+'</span><b class="'+(r.dedMoney>0?"red":"")+'">'+sgn(-r.dedMoney)+"</b></div></section>"
+  +'<section class="rv" style="--i:4"><div class="sec-h amber"><span class="num">05</span><h3>'+t("leaveSec")+'</h3></div><div class="trio"><div class="k-annual"><b class="kc">'+r.c.annual+'</b><span>Annual</span></div><div class="k-official"><b class="kc">'+r.c.official+'</b><span>Official holiday</span></div><div class="k-exam"><b class="kc">'+r.c.exam+"</b><span>Exams</span></div></div></section>"
   +"</div></div></div>";
 }
 function yearSel(id,val){const ys=[...new Set(S.months.map(yearOf))];if(!ys.includes(val))ys.push(val);return '<select id="'+id+'" class="inp" style="width:auto;height:36px" aria-label="'+t("year")+'">'+ys.sort().map(y=>"<option"+(y===val?" selected":"")+">"+y+"</option>").join("")+"</select>";}
@@ -662,23 +726,26 @@ function viewLeave(){
   const y=S.yA,list=[],lim=15;
   S.months.filter(m=>yearOf(m)===y).forEach(m=>m.rows.forEach(d=>{const l=String(d.ded||"").toLowerCase();if(l==="annual"||l==="official holiday")list.push({d:d.date,a:l==="annual"});}));
   list.sort((a,b)=>a.d<b.d?-1:1);
-  const a=list.filter(x=>x.a).length,o=list.length-a,over=list.length>lim;
-  let sq="";for(let i=0;i<Math.max(lim,list.length);i++){const x=list[i];sq+='<i class="'+(x?(i>=lim?"x":x.a?"a":"o"):"")+'"'+(x?' title="'+dmy(x.d)+'"':"")+"></i>";}
-  return '<div class="wrap"><div class="page-head"><div class="eyebrow amber rv">'+t("balance")+' · <span class="n">'+list.length+"/"+lim+'</span></div><h2 class="display">'+letters(S.lang==="ar"?t("leaveTitle"):"Leave")+' <span class="lat" style="color:var(--muted-2);font-size:.5em">'+y+'</span></h2><span class="rule-g"></span><div class="row rv" style="--i:2">'+yearSel("y-leave",y)+"</div></div>"
-  +'<div class="tiles rv" style="--i:3"><div class="tile"><span>Annual days</span><b class="amber">'+cnt("la",a,"i")+'</b></div><div class="tile"><span>Official holiday</span><b>'+cnt("lo",o,"i")+'</b></div><div class="tile"><span>'+t("sum")+" "+t("of15")+'</span><b class="'+(over?"red":"")+'">'+cnt("lt",list.length,"i")+'</b></div><div class="tile"><span>'+t(over?"overLimit":"remaining")+'</span><b class="'+(over?"red":"blue")+'">'+cnt("lr",Math.abs(lim-list.length),"i")+"</b></div></div>"
-  +'<section class="sect rv" style="--i:4"><div class="sec-h amber"><span class="num">01</span><h3>'+t("balance")+'</h3></div><div class="balance">'+sq+'</div><div class="legend" style="margin-top:14px"><span><i style="background:var(--amber)"></i>Annual</span><span><i style="background:repeating-linear-gradient(135deg,var(--amber) 0 3px,transparent 3px 5px);border:1px solid var(--amber)"></i>Official holiday</span></div></section>'
-  +'<section class="sect rv" style="--i:5;border-bottom:0"><div class="sec-h amber"><span class="num">02</span><h3>'+t("days")+"</h3></div>"
-  +(list.length?'<div class="table-wrap"><table class="ledger"><thead><tr><th>#</th><th>'+t("date")+"</th><th>"+t("day")+"</th><th>"+t("type")+"</th></tr></thead><tbody>"+list.map((x,i)=>'<tr style="cursor:default"><td><span class="dd">'+pad(i+1)+'</span></td><td><span class="dd">'+dmy(x.d)+'</span></td><td><span class="dn">'+DNL[S.lang][fromIso(x.d).getDay()]+'</span></td><td><span class="tag amber">'+(x.a?"Annual":"Official holiday")+"</span></td></tr>").join("")+"</tbody></table></div>":'<p class="sub">'+t("noLeave")+"</p>")
+  const an=list.filter(x=>x.a),of=list.filter(x=>!x.a),a=an.length,o=of.length,over=a>lim;
+  let sq="";for(let i=0;i<Math.max(lim,a);i++){const x=an[i];sq+='<i class="'+(x?(i>=lim?"x":"a"):"")+'"'+(x?' title="'+dmy(x.d)+'"':"")+"></i>";}
+  const osq=of.map(x=>'<i class="o" title="'+dmy(x.d)+'"></i>').join("");
+  return '<div class="wrap"><div class="page-head"><div class="eyebrow amber rv">'+t("balance")+' · <span class="n">'+a+"/"+lim+'</span></div><h2 class="display">'+letters(S.lang==="ar"?t("leaveTitle"):"Leave")+' <span class="lat" style="color:var(--muted-2);font-size:.5em">'+y+'</span></h2><span class="rule-g"></span><div class="row rv" style="--i:2">'+yearSel("y-leave",y)+"</div></div>"
+  +'<div class="tiles rv" style="--i:3"><div class="tile k-annual"><span>Annual · '+t("of15")+'</span><b class="kc">'+cnt("la",a,"i")+'</b></div><div class="tile"><span>'+t(over?"overLimit":"remaining")+'</span><b class="'+(over?"red":"blue")+'">'+cnt("lr",Math.abs(lim-a),"i")+'</b></div><div class="tile k-official"><span>Official holiday · '+t("notCounted")+'</span><b class="kc">'+cnt("lo",o,"i")+"</b></div></div>"
+  +'<section class="sect rv" style="--i:4"><div class="sec-h amber"><span class="num">01</span><h3>'+t("balance")+' <span class="n">'+a+"/"+lim+'</span></h3><span class="hint">'+t("balHint")+'</span></div><div class="balance">'+sq+"</div>"
+  +(o?'<div class="sec-h k-official" style="margin-top:28px"><span class="num kc">02</span><h3>Official holiday <span class="n">'+o+'</span></h3><span class="hint">'+t("notCounted")+'</span></div><div class="balance">'+osq+"</div>":"")+"</section>"
+  +'<section class="sect rv" style="--i:5;border-bottom:0"><div class="sec-h amber"><span class="num">'+(o?"03":"02")+"</span><h3>"+t("days")+"</h3></div>"
+  +(list.length?'<div class="table-wrap"><table class="ledger"><thead><tr><th>#</th><th>'+t("date")+"</th><th>"+t("day")+"</th><th>"+t("type")+"</th></tr></thead><tbody>"+(function(){let n=0;return list.map(x=>'<tr style="cursor:default"><td><span class="dd">'+(x.a?pad(++n):"—")+'</span></td><td><span class="dd">'+dmy(x.d)+'</span></td><td><span class="dn">'+DNL[S.lang][fromIso(x.d).getDay()]+"</span></td><td>"+tag(x.a?"Annual":"Official holiday",{d:null,c:x.a?"annual":"official"})+"</td></tr>").join("");})()+"</tbody></table></div>":'<p class="sub">'+t("noLeave")+"</p>")
   +"</section></div>";
 }
 function viewYear(){
   const y=S.yY,ms=S.months.filter(m=>yearOf(m)===y),rs=ms.map(m=>({m,r:calcMonth(m)}));
   const tot=rs.reduce((a,x)=>a+x.r.total,0),mx=Math.max(1,...rs.map(x=>x.r.total)),ov=rs.reduce((a,x)=>a+x.r.overMoney,0),dd=rs.reduce((a,x)=>a+x.r.dedMoney,0),paid=rs.filter(x=>x.r.total>0);
   const best=rs.reduce((b,x)=>!b||x.r.total>b.r.total?x:b,null);
+  const bs=paid.reduce((a,x)=>a+(+x.m.basic||0),0),ex=paid.reduce((a,x)=>a+(+x.m.kbi||0)+(+x.m.bonus||0),0);
   return '<div class="wrap"><div class="page-head"><div class="eyebrow rv">'+t("yearTotal")(rs.length)+'</div><h2 class="display">'+letters(S.lang==="ar"?t("yearTitle"):"Year-end")+' <span class="lat" style="color:var(--muted-2);font-size:.5em">'+y+'</span></h2><span class="rule-g"></span><div class="row rv" style="--i:2">'+yearSel("y-year",y)+"</div></div>"
-  +'<div class="tiles rv" style="--i:3"><div class="tile"><span>'+t("sum")+'</span><b>'+cnt("yt",tot)+'</b></div><div class="tile"><span>'+t("avg")+'</span><b>'+cnt("ya",paid.length?tot/paid.length:0)+'</b></div><div class="tile"><span>'+t("overs")+'</span><b class="blue">'+cnt("yo",ov,"s")+'</b></div><div class="tile"><span>'+t("deds")+'</span><b class="red">'+cnt("yd",-dd,"s")+"</b></div></div>"
+  +'<div class="tiles rv" style="--i:3"><div class="tile"><span>'+t("sum")+'</span><b>'+cnt("yt",tot)+'</b></div><div class="tile"><span>'+t("basicLbl")+'</span><b>'+cnt("yb",bs)+'</b></div><div class="tile"><span>KBI + '+t("bonus")+'</span><b>'+cnt("yx",ex)+'</b></div><div class="tile"><span>'+t("overs")+'</span><b class="blue">'+cnt("yo",ov,"s")+'</b></div><div class="tile"><span>'+t("deds")+'</span><b class="red">'+cnt("yd",-dd,"s")+'</b></div><div class="tile"><span>'+t("avg")+'</span><b>'+cnt("ya",paid.length?tot/paid.length:0)+"</b></div></div>"
   +'<section class="sect rv" style="--i:4;border-bottom:0"><div class="sec-h"><span class="num">01</span><h3>'+t("byMonth")+"</h3>"+(best&&best.r.total>0?'<span class="hint">'+t("best")+" · "+MN[S.lang][monOf(best.m)-1]+"</span>":"")+"</div>"
-  +rs.map(x=>'<button class="yr-row'+(x===best&&x.r.total>0?" best":"")+'" data-goto="'+x.m.key+'"><span class="mo">'+MN[S.lang][monOf(x.m)-1]+'<small><span class="n blue">'+(x.r.overMoney?sgn(x.r.overMoney):"")+'</span> <span class="n red">'+(x.r.dedMoney>0?sgn(-x.r.dedMoney):"")+'</span></small></span><span class="track"><span class="fill" style="width:'+(Math.max(0,x.r.total)/mx*100).toFixed(1)+'%"></span></span><span class="v">'+money(x.r.total)+"</span></button>").join("")
+  +rs.map(x=>'<button class="yr-row'+(x===best&&x.r.total>0?" best":"")+'" data-goto="'+x.m.key+'"><span class="mn">'+pad(monOf(x.m))+'</span><span class="mo">'+MN[S.lang][monOf(x.m)-1]+'<small>'+t("basicLbl")+' <span class="n">'+money(x.m.basic)+'</span> <span class="n blue">'+(x.r.overMoney?sgn(x.r.overMoney):"")+'</span> <span class="n red">'+(x.r.dedMoney>0?sgn(-x.r.dedMoney):"")+'</span></small></span><span class="track"><span class="fill" style="width:'+(Math.max(0,x.r.total)/mx*100).toFixed(1)+'%"></span></span><span class="v">'+money(x.r.total)+"</span></button>").join("")
   +"</section></div>";
 }
 function viewDebts(){
@@ -686,8 +753,8 @@ function viewDebts(){
   if(!D)return '<div class="wrap"><div class="empty-state"><p class="sub">'+t("noDebts")+"</p></div></div>";
   const net=D.totals.M-D.totals.L,colr={L:"red",M:"blue",J:"amber",F:""};
   const led=["L","M","J","F"].map((c,ix)=>{const arr=D.cols[c]||[];
-    let rows=arr.map(x=>'<div class="row"><input class="inp" id="d-'+c+x.r+'" type="number" inputmode="decimal" step="any" data-col="'+c+'" data-r="'+x.r+'" value="'+(typeof x.v==="number"?x.v:"")+'" aria-label="'+t("money")+'"><span class="date">'+(x.date?dmy(x.date):"")+'</span><button class="x" data-del="'+c+'" data-r="'+x.r+'" aria-label="delete">×</button></div>').join("");
-    if(S.adding===c)rows+='<div class="row"><input class="inp" id="d-new" type="number" inputmode="decimal" step="any" data-col="'+c+'" data-r="0" placeholder="'+t("newAmt")+'"><span></span><span></span></div>';
+    let rows=arr.map(x=>'<div class="row"><input class="inp txt" id="n-'+c+x.r+'" type="text" data-ncol="'+c+'" data-r="'+x.r+'" value="'+esc(x.note||"")+'" placeholder="'+t("who")+'" aria-label="'+t("who")+'"><input class="inp" id="d-'+c+x.r+'" type="number" inputmode="decimal" step="any" data-col="'+c+'" data-r="'+x.r+'" value="'+(typeof x.v==="number"?x.v:"")+'" aria-label="'+t("money")+'"><button class="x" data-del="'+c+'" data-r="'+x.r+'" aria-label="delete">×</button>'+(x.date?'<span class="date">'+dmy(x.date)+"</span>":"")+"</div>").join("");
+    if(S.adding===c)rows+='<div class="row"><input class="inp txt" id="d-new-note" type="text" placeholder="'+t("who")+'"><input class="inp" id="d-new" type="number" inputmode="decimal" step="any" data-col="'+c+'" data-r="0" placeholder="'+t("newAmt")+'"><button class="x" data-day="" data-addok="1" aria-label="ok">✓</button></div>';
     return '<section class="led rv" style="--i:'+(4+ix)+'"><div class="sec-h '+colr[c]+'"><span class="num">'+pad(ix+1)+"</span><h3>"+t(c)+"</h3></div>"+(rows||'<p class="empty">'+t("none")+"</p>")+'<div class="foot"><button class="btn-outline btn-sm" data-addled="'+c+'">+ '+t("add")+'</button><b class="'+colr[c]+'">'+money(D.totals[c])+"</b></div></section>";}).join("");
   const g=D.gam||[],gt=g.reduce((a,x)=>a+x.amount,0),gp=g.filter(x=>x.paid).reduce((a,x)=>a+x.amount,0);
   return '<div class="wrap"><div class="page-head"><div class="eyebrow red rv">'+t("net")+' · <span class="n">'+sgn(net)+'</span></div><h2 class="display">'+letters(S.lang==="ar"?t("debts"):"Debts")+'</h2><span class="rule-g"></span></div>'
@@ -708,15 +775,16 @@ function closeDay(){D=null;$("#overlay").hidden=true;$("#overlay").innerHTML="";
 function dayOver(){if(+D.hD>0)return qty(D.hD).replace(/,/g,"")+" D";if(+D.hO>0)return qty(D.hO).replace(/,/g,"")+" O";
   if(COMP.includes(D.over))return D.over+(+D.ch>0?Math.round(+D.ch):"");return D.over||D.other||"";}
 function impactNow(){const m=monthBy(S.cur),one=calcMonth({basic:m.basic,rows:[{over:dayOver(),ded:D.ded}]});return (one.overDays-one.dedDays)*(m.basic/26);}
+function hrsHint(h,mul){return +h>0?qty(h)+" × "+mul+" ÷ 8 = "+qty(h*mul/8)+" "+t("dayU"):t("hHint");}
 function drawDay(first){
-  const dt=fromIso(D.date),tg=(g,n,cls,on)=>'<button type="button" class="tgl '+cls+'" data-tg="'+g+'" data-name="'+esc(n)+'" aria-pressed="'+!!on+'">'+esc(n)+"</button>";
-  const comp=COMP.includes(D.over),im=impactNow();
+  const dt=fromIso(D.date),comp=COMP.includes(D.over),im=impactNow();
+  const tg=(g,n,inf,on)=>'<button type="button" class="tgl k-'+inf.c+'" data-tg="'+g+'" data-name="'+esc(n)+'" aria-pressed="'+!!on+'"><span>'+esc(n)+"</span>"+(inf.d!=null?"<b>"+(inf.d===0?"0":wtxt(inf.d))+"</b>":"")+"</button>";
   const html='<div class="sheet" role="dialog" aria-modal="true"'+(first?"":' style="animation:none"')+'><div><div class="eyebrow">'+t("day")+' · <span class="n">'+dmy(D.date)+'</span></div><h3 class="display" style="margin-top:12px">'+esc(DNL[S.lang][dt.getDay()])+"</h3></div>"
-  +'<div class="grp"><h4>'+t("over1")+'</h4><div class="tgls">'+OVER_FIXED.concat(COMP).map(f=>tg("over",f,"p",D.over===f)).join("")+(D.other?tg("other",D.other,"p",true):"")+"</div>"
+  +'<div class="grp"><h4>'+t("over1")+'</h4><p class="gh">'+t("overW")+'</p><div class="tgls">'+OVER_FIXED.concat(COMP).map(f=>tg("over",f,overInfo(f),D.over===f)).join("")+(D.other?tg("other",D.other,{d:null,c:"mute"},true):"")+"</div>"
   +(comp?'<div class="field"><label for="d-ch">'+t("compH")+'</label><input class="inp" id="d-ch" type="number" inputmode="numeric" min="0" step="1" value="'+esc(D.ch)+'"></div>':"")
-  +'<div class="hrs"><div class="field"><label for="d-hd">'+t("orD")+' · 7 D</label><input class="inp" id="d-hd" type="number" inputmode="decimal" min="0" step="any" value="'+esc(D.hD)+'" placeholder="0"></div><div class="field"><label for="d-ho">'+t("orO")+' · 7 O</label><input class="inp" id="d-ho" type="number" inputmode="decimal" min="0" step="any" value="'+esc(D.hO)+'" placeholder="0"></div></div></div>'
-  +'<div class="grp"><h4>'+t("cut")+'</h4><div class="tgls">'+DED_CUT.map(x=>tg("ded",x,"m",D.ded===x)).join("")+"</div></div>"
-  +'<div class="grp"><h4>'+t("free")+'</h4><div class="tgls">'+LEAVE.map(x=>tg("ded",x,"l",D.ded===x)).join("")+"</div></div>"
+  +'<div class="hrs"><div class="field hbox"><label for="d-hd">'+t("hD")+' <span class="lat">×2</span></label><input class="inp" id="d-hd" type="number" inputmode="decimal" min="0" step="any" value="'+esc(D.hD)+'" placeholder="0"><em id="c-hd">'+hrsHint(D.hD,2)+'</em></div><div class="field hbox"><label for="d-ho">'+t("hO")+' <span class="lat">×1.5</span></label><input class="inp" id="d-ho" type="number" inputmode="decimal" min="0" step="any" value="'+esc(D.hO)+'" placeholder="0"><em id="c-ho">'+hrsHint(D.hO,1.5)+"</em></div></div></div>"
+  +'<div class="grp"><h4>'+t("cut")+'</h4><p class="gh">'+t("cutW")+'</p><div class="tgls">'+DED_CUT.slice().reverse().map(x=>tg("ded",x,dedInfo(x),D.ded===x)).join("")+"</div></div>"
+  +'<div class="grp"><h4>'+t("free")+'</h4><div class="tgls">'+LEAVE.slice().reverse().map(x=>tg("ded",x,dedInfo(x),D.ded===x)).join("")+"</div></div>"
   +'<div class="impact"><span>'+t("impact")+'</span><b id="impact" class="'+(im>0?"blue":im<0?"red":"")+'">'+sgn(im)+"</b></div>"
   +'<div class="acts"><button class="btn-solid" data-day="save">'+t("save")+'</button><button class="btn-outline" data-day="clear">'+t("clear")+'</button><button class="btn-outline" data-day="cancel">'+t("cancel")+"</button></div></div>";
   $("#overlay").innerHTML=html;
@@ -730,6 +798,8 @@ function saveDay(clear){
   write("setDay",{sheet,row,over,ded},j=>{const i=S.months.findIndex(x=>x.name===sheet);if(i>=0)S.months[i]=j.month;});
 }
 
+function addDebt(f){if(f.value===""||!(+f.value)){f.focus();return;}const n=$("#d-new-note");const p={col:f.dataset.col,row:0,value:+f.value,note:n?n.value.trim():""};
+  S.adding=null;write("setDebt",p,j=>{S.debts=j.debts;});}
 /* ===== الثيم ===== */
 function applyTheme(th){document.documentElement.dataset.theme=th;const b=$("#btn-theme");if(b)b.innerHTML=th==="dark"?'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>':'<svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>';
   const meta=$("#theme-color");if(meta)meta.content=th==="dark"?"#121110":"#f4f3f1";}
@@ -781,7 +851,8 @@ document.addEventListener("click",ev=>{
     }
     return;}
   if((el=el0.closest("[data-inst]"))){const x=S.debts.gam.find(g=>g.i===+el.dataset.inst);x.paid=!x.paid;render();write("setGam",{i:x.i,paid:x.paid},j=>{S.debts=j.debts;});return;}
-  if((el=el0.closest("[data-addled]"))){S.adding=el.dataset.addled;render();const f=$("#d-new");if(f)f.focus();return;}
+  if((el=el0.closest("[data-addled]"))){S.adding=el.dataset.addled;render();const f=$("#d-new-note");if(f)f.focus();return;}
+  if(el0.closest("[data-addok]")){const f=$("#d-new");if(f)addDebt(f);return;}
   if((el=el0.closest("[data-del]"))){
     if(!el.classList.contains("sure")){el.classList.add("sure");el.textContent=t("sure");setTimeout(()=>{if(el.isConnected){el.classList.remove("sure");el.textContent="×";}},3000);return;}
     write("setDebt",{col:el.dataset.del,row:+el.dataset.r,value:""},j=>{S.debts=j.debts;});return;}
@@ -790,12 +861,13 @@ document.addEventListener("keydown",ev=>{
   if(ev.key==="Escape"&&D){closeDay();return;}
   const tg=ev.target,typing=tg.matches&&tg.matches("input,select,textarea");
   if((ev.key==="Enter"||ev.key===" ")&&tg.matches&&tg.matches("tr[data-row]")){ev.preventDefault();openDay(+tg.dataset.row);return;}
-  if(ev.key==="Enter"&&tg.dataset&&tg.dataset.col){tg.blur();return;}
+  if(ev.key==="Enter"&&tg.id==="d-new-note"){ev.preventDefault();$("#d-new").focus();return;}
+  if(ev.key==="Enter"&&tg.dataset&&(tg.dataset.col||tg.dataset.ncol)){tg.blur();return;}
   if(!typing&&!D&&S.ready&&S.tab==="month"&&(ev.key==="ArrowLeft"||ev.key==="ArrowRight")){const rtl=S.lang==="ar";stepMonth((ev.key==="ArrowRight")!==rtl?1:-1);}
 });
 document.addEventListener("input",ev=>{if(!D)return;const id=ev.target.id;
   if(id==="d-hd"||id==="d-ho"){syncDay();if(+ev.target.value>0&&(D.over||D.other||(id==="d-hd"?+D.hO>0:+D.hD>0))){D.over="";D.other="";D.ch="";if(id==="d-hd")D.hO="";else D.hD="";drawDay();const f=document.getElementById(id);f.focus();const v=f.value;f.value="";f.value=v;return;}}
-  if(id==="d-hd"||id==="d-ho"||id==="d-ch"){syncDay();const im=impactNow(),b=$("#impact");b.textContent=sgn(im);b.className=im>0?"blue":im<0?"red":"";}});
+  if(id==="d-hd"||id==="d-ho"||id==="d-ch"){syncDay();const im=impactNow(),b=$("#impact");b.textContent=sgn(im);b.className=im>0?"blue":im<0?"red":"";const a=$("#c-hd"),o=$("#c-ho");if(a)a.textContent=hrsHint(D.hD,2);if(o)o.textContent=hrsHint(D.hO,1.5);}});
 document.addEventListener("change",ev=>{
   const el=ev.target;
   if(el.id==="month-pick"){S.cur=el.value;render();return;}
@@ -803,8 +875,9 @@ document.addEventListener("change",ev=>{
   if(el.id==="y-year"){S.yY=+el.value;render();return;}
   if(el.dataset.mf){const m=monthBy(S.cur),f=el.dataset.mf,val=+el.value||0,sheet=m.name;if(m[f]===val)return;m[f]=val;m.total=null;render();
     write("setField",{sheet,field:f,value:val},j=>{const i=S.months.findIndex(x=>x.name===sheet);if(i>=0)S.months[i]=j.month;});return;}
-  if(el.dataset.col){const r=+el.dataset.r;if(el.value===""&&!r){S.adding=null;render();return;}
-    S.adding=null;write("setDebt",{col:el.dataset.col,row:r,value:el.value===""?"":+el.value},j=>{S.debts=j.debts;});return;}
+  if(el.dataset.ncol){write("setDebt",{col:el.dataset.ncol,row:+el.dataset.r,note:el.value.trim()},j=>{S.debts=j.debts;});return;}
+  if(el.dataset.col){const r=+el.dataset.r;if(!r){addDebt(el);return;}
+    if(el.value==="")return;write("setDebt",{col:el.dataset.col,row:r,value:+el.value},j=>{S.debts=j.debts;});return;}
 });
 /* حركات المؤشر زي البورتفوليو */
 (function(){
