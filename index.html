@@ -6,6 +6,10 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" id="theme-color" content="#f4f3f1">
 <title>Pay Ledger — Hazem Nader</title>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="shortcut icon" href="favicon.ico">
 <script>try{var th=JSON.parse(localStorage.getItem("pay.theme"))||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=th;}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -373,6 +377,8 @@ button:disabled{opacity:.5;cursor:default}
 .tgl:hover{border-color:var(--k,var(--ink));transform:translateY(-2px)}
 .tgl[aria-pressed="true"]{background:var(--k);border-color:var(--k);color:var(--on-accent);transform:translateY(-2px);box-shadow:0 8px 18px var(--ink-shadow)}
 .tgl[aria-pressed="true"]>b{color:var(--on-accent);border-color:var(--on-accent)}
+.say{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-inline-start:4px solid var(--k);background:var(--surface);padding:10px 12px;font-size:13.5px;font-weight:600;line-height:1.6;animation:riseIn .35s var(--ease) both}
+.say b{font-family:var(--latin);font-weight:900;font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate;color:var(--k);white-space:nowrap}
 .gh{font-size:11.5px;color:var(--muted-2);margin-top:-4px}
 .hbox{border:2px solid var(--line);background:var(--surface);padding:10px}
 .hbox label{color:var(--ink)!important;font-size:12px!important;letter-spacing:0!important;text-transform:none!important;font-weight:700!important}
@@ -389,6 +395,69 @@ button:disabled{opacity:.5;cursor:default}
 .toast{position:fixed;inset-inline:0;bottom:calc(86px + env(safe-area-inset-bottom,0px));display:grid;place-items:center;pointer-events:none;z-index:90}
 .toast div{background:var(--ink);color:var(--bg);padding:11px 18px;font-size:13px;font-weight:600;max-width:90%;border-inline-start:4px solid var(--amber);animation:riseIn .4s var(--ease) both}
 .busy-veil{opacity:.5;pointer-events:none;transition:opacity .2s}
+
+/* ===== phone ===== */
+@media(max-width:620px){
+  .inp,.month-nav select,select.inp{font-size:16px}
+  header{gap:10px;padding-inline:14px}
+  .brand{gap:10px}.brand .mark{font-size:20px}
+  .sq{width:34px;height:34px}
+  .tools{gap:6px}
+  .hero{padding-block:26px 28px}
+  .hero h1{font-size:clamp(44px,15vw,64px);margin-top:14px}
+  .total .big{font-size:clamp(46px,14.5vw,64px)}
+  .month-nav{gap:6px}
+  .month-nav select{flex:1;min-width:0}
+  .band{padding-block:20px}
+  .legend{gap:6px 12px;font-size:10px}
+  .map{grid-template-columns:repeat(7,minmax(0,1fr));gap:8px 4px}
+  .col{padding-block:26px 30px}
+  .col.side{gap:30px}
+  .sec-h{flex-wrap:wrap;gap:6px 10px}
+  .sec-h .num{font-size:28px}.sec-h h3{font-size:19px}
+  .sec-h .hint{flex-basis:100%;margin-inline-start:0;text-align:start}
+  .ledger,.ledger tbody{display:block;width:100%}
+  .ledger thead{display:none}
+  .ledger tbody tr{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:11px 8px;border-bottom:1px solid var(--line)}
+  .ledger tbody td{display:block;padding:0;border:0}
+  .ledger tbody td:empty{display:none}
+  .ledger tbody td:nth-child(1){flex:0 0 66px}
+  .ledger tbody td:nth-child(2){flex:0 0 44px}
+  .ledger tbody td:last-child{margin-inline-start:auto}
+  .ledger.plain tbody td:nth-child(1){flex:0 0 28px}
+  .ledger.plain tbody td:nth-child(2){flex:0 0 84px}
+  .ledger.plain tbody td:nth-child(3){flex:1}
+  .tag{font-size:10px}.tag>span{padding:4px 7px}.tag>b{padding:4px 6px}
+  .bd-row,.bd-head{grid-template-columns:minmax(0,1fr) 34px 44px 84px;gap:6px}
+  .eq>div{padding:10px 12px}
+  .page-head{padding-block:26px 22px}
+  .page-head h2{font-size:clamp(36px,12vw,52px)}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tile{padding:18px 12px 18px 0;border-inline-end:0;border-bottom:2px solid var(--line);padding-inline:0 10px}
+  .tile:nth-last-child(-n+1){border-bottom:0}
+  .tile b{font-size:clamp(20px,6.4vw,28px)}
+  .sect{padding-block:26px 30px}
+  .trio b{font-size:26px}
+  .trio div{padding:12px 10px}
+  .stubs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .login{min-height:0;gap:26px;padding-block:28px 40px}
+  .login h1{font-size:clamp(44px,14vw,64px);margin-top:14px}
+  .card .acts{flex-direction:column}
+  .card .acts>*{width:100%}
+  .sheet{padding:20px 16px calc(20px + env(safe-area-inset-bottom,0px));gap:18px}
+  .sheet h3{font-size:30px}
+  .tgls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  .tgl{justify-content:space-between;font-size:10.5px;letter-spacing:.02em;min-width:0}
+  .tgl>span{padding:11px 8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .tgl>b{padding:11px 7px}
+  .tgl:hover{transform:none}
+  .say{font-size:13px}
+  .sheet .acts{position:sticky;bottom:calc(-20px - env(safe-area-inset-bottom,0px));background:var(--bg);padding-block:10px calc(10px + env(safe-area-inset-bottom,0px));margin-bottom:-20px;border-top:2px solid var(--line)}
+  .sheet .acts .btn-outline{flex:1;padding:13px 8px}
+  .sheet .acts .btn-solid{flex-basis:100%}
+  .led .row{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr) 42px}
+  .toast{bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+}
 ::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.scroll-progress{display:none}.fresh .letter{opacity:1}}
 </style>
@@ -734,7 +803,7 @@ function viewLeave(){
   +'<section class="sect rv" style="--i:4"><div class="sec-h amber"><span class="num">01</span><h3>'+t("balance")+' <span class="n">'+a+"/"+lim+'</span></h3><span class="hint">'+t("balHint")+'</span></div><div class="balance">'+sq+"</div>"
   +(o?'<div class="sec-h k-official" style="margin-top:28px"><span class="num kc">02</span><h3>Official holiday <span class="n">'+o+'</span></h3><span class="hint">'+t("notCounted")+'</span></div><div class="balance">'+osq+"</div>":"")+"</section>"
   +'<section class="sect rv" style="--i:5;border-bottom:0"><div class="sec-h amber"><span class="num">'+(o?"03":"02")+"</span><h3>"+t("days")+"</h3></div>"
-  +(list.length?'<div class="table-wrap"><table class="ledger"><thead><tr><th>#</th><th>'+t("date")+"</th><th>"+t("day")+"</th><th>"+t("type")+"</th></tr></thead><tbody>"+(function(){let n=0;return list.map(x=>'<tr style="cursor:default"><td><span class="dd">'+(x.a?pad(++n):"—")+'</span></td><td><span class="dd">'+dmy(x.d)+'</span></td><td><span class="dn">'+DNL[S.lang][fromIso(x.d).getDay()]+"</span></td><td>"+tag(x.a?"Annual":"Official holiday",{d:null,c:x.a?"annual":"official"})+"</td></tr>").join("");})()+"</tbody></table></div>":'<p class="sub">'+t("noLeave")+"</p>")
+  +(list.length?'<div class="table-wrap"><table class="ledger plain"><thead><tr><th>#</th><th>'+t("date")+"</th><th>"+t("day")+"</th><th>"+t("type")+"</th></tr></thead><tbody>"+(function(){let n=0;return list.map(x=>'<tr style="cursor:default"><td><span class="dd">'+(x.a?pad(++n):"—")+'</span></td><td><span class="dd">'+dmy(x.d)+'</span></td><td><span class="dn">'+DNL[S.lang][fromIso(x.d).getDay()]+"</span></td><td>"+tag(x.a?"Annual":"Official holiday",{d:null,c:x.a?"annual":"official"})+"</td></tr>").join("");})()+"</tbody></table></div>":'<p class="sub">'+t("noLeave")+"</p>")
   +"</section></div>";
 }
 function viewYear(){
@@ -775,6 +844,18 @@ function closeDay(){D=null;$("#overlay").hidden=true;$("#overlay").innerHTML="";
 function dayOver(){if(+D.hD>0)return qty(D.hD).replace(/,/g,"")+" D";if(+D.hO>0)return qty(D.hO).replace(/,/g,"")+" O";
   if(COMP.includes(D.over))return D.over+(+D.ch>0?Math.round(+D.ch):"");return D.over||D.other||"";}
 function impactNow(){const m=monthBy(S.cur),one=calcMonth({basic:m.basic,rows:[{over:dayOver(),ded:D.ded}]});return (one.overDays-one.dedDays)*(m.basic/26);}
+const EXPL={ar:{"Absence":"غياب: بيتخصم 3 أيام","Day Off":"بيتخصم يومين","Single Day":"بيتخصم يوم واحد","Half Day":"بيتخصم نص يوم",
+  "Annual":"إجازة من رصيد الـ 15 يوم. مفيش خصم","Official holiday":"إجازة رسمية. مفيش خصم ومش من الرصيد","Exam":"امتحان. مفيش خصم",
+  "Friday":"شغل يوم جمعة: بتاخد يومين زيادة","Double Paid":"اليوم بيومين: بتاخد يومين زيادة","Over 4H D":"4 ساعات بالدبل: بتاخد يوم زيادة",
+  "Over Time 4H":"4 ساعات إضافي: بتاخد 0.75 يوم زيادة","Over Time 6H":"6 ساعات إضافي: بتاخد 1.125 يوم زيادة","Over Time 8H":"8 ساعات إضافي: بتاخد يوم ونص زيادة",
+  "Compensation A":"تعويض غياب: بيرجّعلك اللي اتخصم في الغياب","Compensation D":"تعويض Day Off: بيرجّعلك اللي اتخصم في الـ Day Off"},
+ en:{"Absence":"Absence: 3 days are deducted","Day Off":"2 days are deducted","Single Day":"1 day is deducted","Half Day":"Half a day is deducted",
+  "Annual":"Leave from the 15-day balance. No deduction","Official holiday":"Official holiday. No deduction, not from the balance","Exam":"Exam. No deduction",
+  "Friday":"Worked a Friday: you earn 2 extra days","Double Paid":"Day paid double: you earn 2 extra days","Over 4H D":"4 hours at double: you earn 1 extra day",
+  "Over Time 4H":"4 hours overtime: you earn 0.75 day","Over Time 6H":"6 hours overtime: you earn 1.125 days","Over Time 8H":"8 hours overtime: you earn 1.5 days",
+  "Compensation A":"Makes up an absence: gives back what Absence deducted","Compensation D":"Makes up a day off: gives back what Day Off deducted"}};
+function say(name,inf,valStr){if(!name||!EXPL[S.lang][name])return "";const rate=(+monthBy(S.cur).basic||0)/26,d=valStr!=null?valStr:inf.d;
+  return '<p class="say k-'+inf.c+'"><span>'+EXPL[S.lang][name]+"</span>"+(d?'<b>'+sgn(d*rate)+"</b>":"")+"</p>";}
 function hrsHint(h,mul){return +h>0?qty(h)+" × "+mul+" ÷ 8 = "+qty(h*mul/8)+" "+t("dayU"):t("hHint");}
 function drawDay(first){
   const dt=fromIso(D.date),comp=COMP.includes(D.over),im=impactNow();
@@ -782,9 +863,10 @@ function drawDay(first){
   const html='<div class="sheet" role="dialog" aria-modal="true"'+(first?"":' style="animation:none"')+'><div><div class="eyebrow">'+t("day")+' · <span class="n">'+dmy(D.date)+'</span></div><h3 class="display" style="margin-top:12px">'+esc(DNL[S.lang][dt.getDay()])+"</h3></div>"
   +'<div class="grp"><h4>'+t("over1")+'</h4><p class="gh">'+t("overW")+'</p><div class="tgls">'+OVER_FIXED.concat(COMP).map(f=>tg("over",f,overInfo(f),D.over===f)).join("")+(D.other?tg("other",D.other,{d:null,c:"mute"},true):"")+"</div>"
   +(comp?'<div class="field"><label for="d-ch">'+t("compH")+'</label><input class="inp" id="d-ch" type="number" inputmode="numeric" min="0" step="1" value="'+esc(D.ch)+'"></div>':"")
+  +(D.over?say(D.over,overInfo(dayOver())||overInfo(D.over),(overInfo(dayOver())||{}).d):"")
   +'<div class="hrs"><div class="field hbox"><label for="d-hd">'+t("hD")+' <span class="lat">×2</span></label><input class="inp" id="d-hd" type="number" inputmode="decimal" min="0" step="any" value="'+esc(D.hD)+'" placeholder="0"><em id="c-hd">'+hrsHint(D.hD,2)+'</em></div><div class="field hbox"><label for="d-ho">'+t("hO")+' <span class="lat">×1.5</span></label><input class="inp" id="d-ho" type="number" inputmode="decimal" min="0" step="any" value="'+esc(D.hO)+'" placeholder="0"><em id="c-ho">'+hrsHint(D.hO,1.5)+"</em></div></div></div>"
-  +'<div class="grp"><h4>'+t("cut")+'</h4><p class="gh">'+t("cutW")+'</p><div class="tgls">'+DED_CUT.slice().reverse().map(x=>tg("ded",x,dedInfo(x),D.ded===x)).join("")+"</div></div>"
-  +'<div class="grp"><h4>'+t("free")+'</h4><div class="tgls">'+LEAVE.slice().reverse().map(x=>tg("ded",x,dedInfo(x),D.ded===x)).join("")+"</div></div>"
+  +'<div class="grp"><h4>'+t("cut")+'</h4><p class="gh">'+t("cutW")+'</p><div class="tgls">'+DED_CUT.slice().reverse().map(x=>tg("ded",x,dedInfo(x),D.ded===x)).join("")+"</div>"+(DED_CUT.includes(D.ded)?say(D.ded,dedInfo(D.ded)):"")+"</div>"
+  +'<div class="grp"><h4>'+t("free")+'</h4><div class="tgls">'+LEAVE.slice().reverse().map(x=>tg("ded",x,dedInfo(x),D.ded===x)).join("")+"</div>"+(LEAVE.includes(D.ded)?say(D.ded,dedInfo(D.ded)):"")+"</div>"
   +'<div class="impact"><span>'+t("impact")+'</span><b id="impact" class="'+(im>0?"blue":im<0?"red":"")+'">'+sgn(im)+"</b></div>"
   +'<div class="acts"><button class="btn-solid" data-day="save">'+t("save")+'</button><button class="btn-outline" data-day="clear">'+t("clear")+'</button><button class="btn-outline" data-day="cancel">'+t("cancel")+"</button></div></div>";
   $("#overlay").innerHTML=html;
