@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" id="theme-color" content="#f4f3f1">
-<title>Pay Ledger — Hazem Nader</title>
+<title>Salary Site — Hazem Nader</title>
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -331,12 +331,14 @@ button:disabled{opacity:.5;cursor:default}
 .drow .who{font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .drow.done{opacity:.62}
 .drow.done b{text-decoration:line-through;color:var(--muted)}
-.drow .who small .n{font-family:var(--latin)}
+.drow .who small .n{font-family:var(--latin);font-weight:700;font-size:13.5px;color:var(--ink);letter-spacing:.01em}
+.drow .who{font-size:16px}
+.led .sec-h .hint{font-size:13px;color:var(--muted)}
 .mdone{align-self:flex-start}
 .pop-body .hrs .inp{font-size:16px}
 .pop-body input[type=date]{font-family:var(--latin);font-weight:700}
 .drow .who.none{color:var(--muted-2);font-weight:500}
-.drow .who small{display:block;font-size:11px;font-weight:500;color:var(--muted-2)}
+.drow .who small{display:block;font-size:13px;font-weight:500;color:var(--muted);margin-top:4px;white-space:normal;line-height:1.6}
 .drow b{font-family:var(--latin);font-size:17px;font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
 .drow .pen{font-style:normal;color:var(--muted-2);text-align:center;transition:color .2s}
 .drow:hover .pen{color:var(--blue)}
@@ -369,6 +371,11 @@ button:disabled{opacity:.5;cursor:default}
 .led .foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
 .led .foot b{direction:ltr;unicode-bidi:isolate;display:inline-block;font-family:var(--latin);font-size:24px;font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .led .empty{color:var(--muted-2);font-size:13px;padding:10px 0}
+.lv{border-top:2px solid var(--k,var(--ink))}
+.lv-row{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 4px;border-bottom:1px solid var(--line);transition:background .15s,padding .25s var(--ease)}
+.lv-row:hover{background:var(--surface);padding-inline:12px}
+.lv-row b{font-family:var(--latin);font-size:18px;font-weight:900;letter-spacing:-.02em}
+.lv-row .dd{font-size:14px;color:var(--ink);font-weight:600}
 .stubs{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px}
 .stub{position:relative;border:2px solid var(--line);background:var(--surface);padding:12px 12px 14px;text-align:start;overflow:hidden;transition:transform .2s var(--ease),border-color .2s,box-shadow .2s}
 .stub:hover{transform:translateY(-4px);border-color:var(--ink);box-shadow:0 10px 20px var(--ink-shadow)}
@@ -396,10 +403,17 @@ button:disabled{opacity:.5;cursor:default}
 @media(max-width:620px){.ld-map{grid-template-columns:repeat(10,minmax(0,1fr))}.loading{min-height:calc(100vh - 200px)}.loading .ghost{display:block;font-size:46vw;opacity:.5}}
 /* login */
 .login{min-height:calc(100vh - 70px);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,5vw,72px);align-items:center;padding-block:clamp(34px,6vw,80px);position:relative}
-.login>div:first-child{position:relative;z-index:1}
-.login .ghost{inset-inline-end:auto;inset-inline-start:-3%;top:auto;bottom:2%;font-size:clamp(150px,22vw,300px)}
-@media(max-width:860px){.login .ghost{display:none}}
-.login h1{font-size:clamp(50px,9.5vw,118px);margin-top:18px}
+.lg-brand{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:18px}
+.lg-mark{display:grid;place-items:center;width:clamp(84px,11vw,128px);aspect-ratio:1;background:var(--blue);color:var(--on-accent);font-family:var(--latin);font-weight:900;font-size:clamp(38px,5vw,60px);letter-spacing:-.04em;box-shadow:10px 10px 0 var(--blue-soft),0 18px 40px var(--blue-shadow);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.lg-mark:hover{transform:translate(-4px,-4px);box-shadow:16px 16px 0 var(--blue-soft),0 22px 46px var(--blue-shadow)}
+.lg-title{font-family:var(--latin);font-weight:900;text-transform:uppercase;letter-spacing:-.045em;line-height:.86;font-size:clamp(52px,9.5vw,128px);display:flex;flex-direction:column;align-items:flex-start;width:100%;cursor:default;transition:color .35s ease,text-shadow .45s ease}
+:root[dir="rtl"] .lg-title{align-items:flex-end}
+.lg-title>span{display:block;white-space:nowrap}
+.lg-title>span:nth-child(2){color:transparent;-webkit-text-stroke:2px var(--ink)}
+.lg-title>span:nth-child(2) .letter{-webkit-text-stroke:2px var(--ink)}
+.lg-title:hover>span:first-child{color:var(--blue)}
+.lg-brand .rule-g{width:96px;height:5px}
+@media(max-width:620px){.lg-brand{gap:14px}.lg-title{font-size:clamp(46px,16vw,72px)}.lg-title>span:nth-child(2),.lg-title>span:nth-child(2) .letter{-webkit-text-stroke-width:1.5px}}
 .login .lead{max-width:460px;margin-top:22px;font-size:15.5px}
 .login .hero-rule{height:2px;background:var(--line);margin:24px 0 0;max-width:520px}
 .card{background:var(--surface);border:2px solid var(--ink);box-shadow:0 20px 44px var(--ink-shadow);padding:clamp(20px,3vw,32px);display:flex;flex-direction:column;gap:16px;position:relative;z-index:1}
@@ -408,6 +422,14 @@ button:disabled{opacity:.5;cursor:default}
 .card .inp{height:48px;font-weight:600}
 .card .acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
 .card .acts .btn-solid{flex:1}
+.pw{position:relative}
+.pw .inp{padding-right:52px}
+.pw-eye{position:absolute;top:0;right:0;width:48px;height:100%;display:grid;place-items:center;background:transparent;border:0;border-left:2px solid var(--line);color:var(--muted);transition:color .2s,background .2s}
+.pw-eye:hover{color:var(--ink);background:var(--bg)}
+.pw-eye svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:square}
+.pw-eye .slash{opacity:0;transition:opacity .15s}
+.pw-eye[aria-pressed="true"]{color:var(--blue)}
+.pw-eye[aria-pressed="true"] .slash{opacity:1}
 .err{color:var(--red);font-size:13px;font-weight:600;border-inline-start:3px solid var(--red);padding-inline-start:10px}
 .fine{font-size:12px;color:var(--muted-2)}
 @media(max-width:860px){.login{grid-template-columns:minmax(0,1fr);align-items:start}}
@@ -599,11 +621,11 @@ function calcMonth(m){
 
 /* ===== النصوص ===== */
 const T={
-ar:{brand:"دفتر المرتب",month:"الشهر",leave:"الإجازات",year:"السنة",debts:"الديون",
+ar:{brand:"Salary Site",month:"الشهر",leave:"الإجازات",year:"السنة",debts:"الديون",
  ld:["بفتح الدفتر…","بعدّ أيام الشهر…","بحسب الإضافي…","بجمع الخصومات…","براجع الإجازات…","ثواني والأرقام تجهز…"],
  synced:"متزامن",saving:"بيتحفظ…",reading:"بيقرا…",failed:"ما اتحفظش",
  private:"دفتر خاص",signin:"تسجيل الدخول",lead:"المرتب، الإضافي، الخصومات والإجازات. كل رقم بيتقري ويتكتب في الشيت بتاعك مباشرة.",
- user:"اسم المستخدم",pass:"كلمة السر",enter:"دخول",entering:"بيدخل…",demo:"جرّب نسخة تجريبية",url:"رابط الـ Web app",
+ showPass:"إظهار / إخفاء كلمة السر", user:"اسم المستخدم",pass:"كلمة السر",enter:"دخول",entering:"بيدخل…",demo:"جرّب نسخة تجريبية",url:"رابط الـ Web app",
  fineLogin:"اليوزر والباسورد من تاب My user في الشيت.",demoBar:"بيانات تجريبية · مفيش حاجة بتتحفظ",
  period:"فترة المرتب",total:"صافي المرتب",fromSheet:"الرقم من خلية G1 في الشيت · المحسوب",
  gross:"الأساسي + KBI",basicLbl:"الأساسي",basicNote:"عليه بيتحسب الإضافي والخصم",addNote:"بيتضاف زي ما هو",rateNote:"الأساسي ÷ 26",editHint:"دوس على الرقم وعدّله",how:"الحساب",dayU:"يوم",
@@ -625,11 +647,11 @@ ar:{brand:"دفتر المرتب",month:"الشهر",leave:"الإجازات",ye
  impact:"أثر اليوم على المرتب",save:"حفظ في الشيت",clear:"فضّي اليوم",cancel:"إلغاء",logout:"خروج",refresh:"تحديث",noDebts:"مفيش تاب اسمه «ديون» في الشيت.",
  e_bad_login:"اليوزر أو الباسورد غلط.",e_locked:"محاولات كتير غلط. استنى ربع ساعة.",e_no_users_sheet:"مفيش تاب My user أو فاضي.",e_unauthorized:"الجلسة انتهت. ادخل تاني.",
  e_net:"مفيش اتصال بالشيت.",e_url:"الرابط ده مش Web app شغال، أو الصلاحية مش Anyone.",e_unknown_action:"Code.gs قديم. حدّثه واعمل Deploy بنسخة جديدة.",e_bad_value:"Code.gs قديم أو المبلغ مش رقم. حدّث Code.gs واعمل Deploy بنسخة جديدة.",e_need:"اكتب اليوزر والباسورد."},
-en:{brand:"Pay Ledger",month:"Month",leave:"Leave",year:"Year",debts:"Debts",
+en:{brand:"Salary Site",month:"Month",leave:"Leave",year:"Year",debts:"Debts",
  ld:["Opening the ledger…","Counting the days…","Adding up the overs…","Totalling deductions…","Checking leave…","Numbers are almost ready…"],
  synced:"Synced",saving:"Saving…",reading:"Reading…",failed:"Not saved",
  private:"Private ledger",signin:"Sign in",lead:"Salary, overtime, deductions and leave. Every number is read from and written to your own sheet.",
- user:"Username",pass:"Password",enter:"Enter",entering:"Entering…",demo:"Try the demo",url:"Web app URL",
+ showPass:"Show / hide password", user:"Username",pass:"Password",enter:"Enter",entering:"Entering…",demo:"Try the demo",url:"Web app URL",
  fineLogin:"Username and password come from the My user tab.",demoBar:"Demo data · nothing is saved",
  period:"Pay period",total:"Total salary",fromSheet:"Read from cell G1 · computed",
  gross:"Basic + KBI",basicLbl:"Basic",basicNote:"Overs and deductions are based on it",addNote:"Added as is",rateNote:"Basic ÷ 26",editHint:"Tap a number to edit",how:"The maths",dayU:"days",
@@ -798,14 +820,15 @@ function startLoader(){
 }
 function viewLogin(){
   const needUrl=!API_URL;
-  return '<div class="wrap"><div class="login"><div><div class="eyebrow rv">'+t("private")+'</div><h1 class="display">'+letters(S.lang==="ar"?"دفتر المرتب":"Pay")+(S.lang==="ar"?"":"<br>"+letters("Ledger"))+'</h1></div>'
+  const lat=s=>{if(reduce)return esc(s);return s.split("").map((ch,i)=>'<span class="letter" style="animation-delay:'+((lat.i=(lat.i||0)+1)*0.05).toFixed(2)+'s">'+esc(ch)+"</span>").join("");};lat.i=0;
+  return '<div class="wrap"><div class="login"><div class="lg-brand"><div class="lg-mark rv" aria-hidden="true">HN</div><div class="eyebrow rv" style="--i:1">'+t("private")+'</div><h1 class="lg-title" dir="ltr" aria-label="Salary Site"><span>'+lat("Salary")+"</span><span>"+lat("Site")+'</span></h1><span class="rule-g"></span></div>'
   +'<form class="card rv" style="--i:4" id="login-form" autocomplete="on"><h2>'+t("signin")+"</h2>"
   +(needUrl?'<div class="field"><label for="in-url">'+t("url")+'</label><input class="inp" id="in-url" type="url" dir="ltr" placeholder="https://script.google.com/macros/s/…/exec"></div>':"")
-  +'<div class="field"><label for="in-user">'+t("user")+'</label><input class="inp" id="in-user" type="password" autocomplete="username" autocapitalize="none" spellcheck="false"></div>'
-  +'<div class="field"><label for="in-pass">'+t("pass")+'</label><input class="inp" id="in-pass" type="password" autocomplete="current-password"></div>'
+  +'<div class="field"><label for="in-user">'+t("user")+'</label><input class="inp" id="in-user" type="text" dir="ltr" autocomplete="username" autocapitalize="none" spellcheck="false"></div>'
+  +'<div class="field"><label for="in-pass">'+t("pass")+'</label><div class="pw"><input class="inp" id="in-pass" type="password" dir="ltr" autocomplete="current-password"><button type="button" class="pw-eye" id="pw-eye" aria-label="'+t("showPass")+'" aria-pressed="false" title="'+t("showPass")+'"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path class="slash" d="M4 4l16 16"/></svg></button></div></div>'
   +(S.err?'<div class="err" role="alert">'+esc(S.err)+"</div>":"")
   +'<div class="acts"><button class="btn-solid mag" type="submit" id="btn-enter"'+(S.busy?" disabled":"")+"><span>"+t(S.busy?"entering":"enter")+'</span><span class="flip">&rarr;</span></button><button class="btn-outline mag" type="button" data-act="demo">'+t("demo")+"</button></div>"
-  +"</form><div class=\"ghost\">HN</div></div></div>";
+  +"</form></div></div>";
 }
 const WT={"Friday":2,"Double Paid":2,"Over 4H D":1,"Over Time 4H":0.75,"Over Time 6H":1.125,"Over Time 8H":1.5};
 const DW={"Absence":[-3,"abs"],"Day Off":[-2,"off"],"Single Day":[-1,"single"],"Half Day":[-0.5,"half"],"Annual":[0,"annual"],"Official holiday":[0,"official"],"Exam":[0,"exam"]};
@@ -875,9 +898,9 @@ function viewLeave(){
   +'<div class="tiles rv" style="--i:3"><div class="tile k-annual"><span>Annual · '+t("of15")+'</span><b class="kc">'+cnt("la",a,"i")+'</b></div><div class="tile"><span>'+t(over?"overLimit":"remaining")+'</span><b class="'+(over?"red":"blue")+'">'+cnt("lr",Math.abs(lim-a),"i")+'</b></div><div class="tile k-official"><span>Official holiday · '+t("notCounted")+'</span><b class="kc">'+cnt("lo",o,"i")+"</b></div></div>"
   +'<section class="sect rv" style="--i:4"><div class="sec-h amber"><span class="num">01</span><h3>'+t("balance")+' <span class="n">'+a+"/"+lim+'</span></h3><span class="hint">'+t("balHint")+'</span></div><div class="balance">'+sq+"</div>"
   +(o?'<div class="sec-h k-official" style="margin-top:28px"><span class="num kc">02</span><h3>Official holiday <span class="n">'+o+'</span></h3><span class="hint">'+t("notCounted")+'</span></div><div class="balance">'+osq+"</div>":"")+"</section>"
-  +'<section class="sect rv" style="--i:5;border-bottom:0"><div class="sec-h amber"><span class="num">'+(o?"03":"02")+"</span><h3>"+t("days")+"</h3></div>"
-  +(list.length?'<div class="table-wrap"><table class="ledger plain"><thead><tr><th>#</th><th>'+t("date")+"</th><th>"+t("day")+"</th><th>"+t("type")+"</th></tr></thead><tbody>"+(function(){let n=0;return list.map(x=>'<tr style="cursor:default"><td><span class="dd">'+(x.a?pad(++n):"—")+'</span></td><td><span class="dd">'+dmy(x.d)+'</span></td><td><span class="dn">'+DNL[S.lang][fromIso(x.d).getDay()]+"</span></td><td>"+tag(x.a?"Annual":"Official holiday",{d:null,c:x.a?"annual":"official"})+"</td></tr>").join("");})()+"</tbody></table></div>":'<p class="sub">'+t("noLeave")+"</p>")
-  +"</section></div>";
+  +'<div class="ledgers" style="border-bottom:0">'+[["annual","Annual",an,t("of15")],["official","Official holiday",of,t("notCounted")]].map((L,ix)=>
+    '<section class="led k-'+L[0]+' rv" style="--i:'+(5+ix)+'"><div class="sec-h"><span class="num kc">'+pad((o?3:2)+ix)+"</span><h3>"+L[1]+' <span class="n kc">'+L[2].length+'</span></h3><span class="hint">'+L[3]+"</span></div>"
+    +(L[2].length?'<div class="lv">'+L[2].map((x,i)=>'<div class="lv-row"><b class="kc">'+pad(i+1)+'</b><span class="dn">'+DNL[S.lang][fromIso(x.d).getDay()]+'</span><span class="dd">'+dmy(x.d)+"</span></div>").join("")+"</div>":'<p class="empty">'+t("none")+"</p>")+"</section>").join("")+"</div></div>";
 }
 function viewYear(){
   const y=S.yY,ms=S.months.filter(m=>yearOf(m)===y),rs=ms.map(m=>({m,r:calcMonth(m)}));
@@ -1029,6 +1052,7 @@ document.addEventListener("submit",ev=>{
 document.addEventListener("click",ev=>{
   const el0=ev.target;let el;
   if((el=el0.closest("[data-tab]"))){go(el.dataset.tab);return;}
+  if((el=el0.closest("#pw-eye"))){const f=$("#in-pass"),show=f.type==="password";f.type=show?"text":"password";el.setAttribute("aria-pressed",show);f.focus();return;}
   if(el0.closest("#btn-theme")){toggleTheme(ev);return;}
   if(el0.closest("#btn-lang")){S.lang=S.lang==="ar"?"en":"ar";store.set("pay.lang",S.lang);render();if(D)drawDay();if(M)drawModal();return;}
   if(el0.closest("#btn-out")){signOut();return;}
