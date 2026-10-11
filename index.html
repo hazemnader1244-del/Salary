@@ -611,14 +611,14 @@ function render(){
 }
 function viewLogin(){
   const needUrl=!API_URL;
-  return '<div class="wrap"><div class="login"><div><div class="eyebrow rv">'+t("private")+'</div><h1 class="display">'+letters(S.lang==="ar"?"دفتر المرتب":"Pay")+(S.lang==="ar"?"":"<br>"+letters("Ledger"))+'</h1><div class="hero-rule rv" style="--i:2"></div><p class="sub lead rv" style="--i:3">'+t("lead")+'</p></div>'
+  return '<div class="wrap"><div class="login"><div><div class="eyebrow rv">'+t("private")+'</div><h1 class="display">'+letters(S.lang==="ar"?"دفتر المرتب":"Pay")+(S.lang==="ar"?"":"<br>"+letters("Ledger"))+'</h1></div>'
   +'<form class="card rv" style="--i:4" id="login-form" autocomplete="on"><h2>'+t("signin")+"</h2>"
   +(needUrl?'<div class="field"><label for="in-url">'+t("url")+'</label><input class="inp" id="in-url" type="url" dir="ltr" placeholder="https://script.google.com/macros/s/…/exec"></div>':"")
-  +'<div class="field"><label for="in-user">'+t("user")+'</label><input class="inp" id="in-user" type="text" autocomplete="username" autocapitalize="none" spellcheck="false"></div>'
+  +'<div class="field"><label for="in-user">'+t("user")+'</label><input class="inp" id="in-user" type="password" autocomplete="username" autocapitalize="none" spellcheck="false"></div>'
   +'<div class="field"><label for="in-pass">'+t("pass")+'</label><input class="inp" id="in-pass" type="password" autocomplete="current-password"></div>'
   +(S.err?'<div class="err" role="alert">'+esc(S.err)+"</div>":"")
   +'<div class="acts"><button class="btn-solid mag" type="submit" id="btn-enter"'+(S.busy?" disabled":"")+"><span>"+t(S.busy?"entering":"enter")+'</span><span class="flip">&rarr;</span></button><button class="btn-outline mag" type="button" data-act="demo">'+t("demo")+"</button></div>"
-  +'<p class="fine">'+t("fineLogin")+"</p></form><div class=\"ghost\">HN</div></div></div>";
+  +"</form><div class=\"ghost\">HN</div></div></div>";
 }
 function tagOver(s){if(!s)return "";const k=classify(s).t;return '<span class="tag'+(k==="other"?" mute":k==="exam"?" amber":"")+'">'+esc(s)+"</span>";}
 function tagDed(s){return s?'<span class="tag '+(LEAVE.includes(s)?"amber":"red")+'">'+esc(s)+"</span>":"";}
