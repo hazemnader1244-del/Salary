@@ -412,12 +412,13 @@ button:disabled{opacity:.5;cursor:default}
 .bprev-total small{font-size:11px;letter-spacing:.2em;color:var(--blue)}
 .site-mark{display:inline-grid;place-items:center;min-width:40px;height:40px;padding:0 6px;background:var(--blue);color:var(--on-accent);font-family:var(--latin);font-weight:900;font-size:16px;letter-spacing:-.02em;font-style:normal}
 .site-mark.big{width:84px;height:84px;font-size:36px;box-shadow:8px 8px 0 var(--blue-soft)}
-.site-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto 42px;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.site-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto 42px 42px;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
 .site-row .who{font-weight:600;min-width:0}
 .site-row .who small{display:block;font-size:12.5px;font-weight:500;color:var(--muted)}
 .site-row .x{width:42px;height:42px;border:2px solid var(--line);background:transparent;color:var(--muted);font-weight:800;transition:all .2s}
 .site-row .x:hover{border-color:var(--red);color:var(--red)}
 .built{display:flex;flex-wrap:wrap;gap:22px;align-items:center;border:2px solid var(--blue);background:var(--blue-soft);padding:22px;margin-top:26px}
+@media(max-width:620px){.brand .div,.brand .name{display:none}.site-row{grid-template-columns:auto minmax(0,1fr) 42px 42px}.site-row>a{grid-column:2/-1;justify-self:start;order:5}}
 .tabbar.five{grid-template-columns:repeat(5,1fr)}
 /* loading */
 @keyframes ldCell{0%,100%{background:var(--surface);border-color:var(--line);transform:none}18%{background:var(--k,var(--blue));border-color:var(--k,var(--blue));transform:translateY(-7px)}40%{background:var(--surface);border-color:var(--line);transform:none}}
@@ -589,6 +590,7 @@ button:disabled{opacity:.5;cursor:default}
     <button class="sq" id="btn-refresh" hidden aria-label="Refresh" title="Refresh"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5"/></svg></button>
     <button class="sq" id="btn-lang" aria-label="Language"></button>
     <button class="sq" id="btn-theme" aria-label="Theme"></button>
+    <button class="sq" id="btn-acct" hidden aria-label="Account" title="Account"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></button>
     <button class="sq" id="btn-out" hidden aria-label="Sign out" title="Sign out"><svg viewBox="0 0 24 24"><path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9"/></svg></button>
   </div>
 </header>
@@ -656,7 +658,7 @@ function calcMonth(m){
 
 /* ===== النصوص ===== */
 const T={
-ar:{brand:"Salary Site",build:"بناء",bTitle:"بناء موقع جديد",bLead:"بيتعمل ملف Google Sheet جديد متصفّر من أول الشهر ده، ويوزر جديد يدخل من نفس رابط الموقع ويشوف اسمه ولوجو بحروفه وبياناته هو بس.",bName:"الاسم (اسمين)",bUser:"اسم الدخول (إنجليزي)",bPass:"كلمة السر (6 حروف على الأقل)",bBasic:"المرتب الأساسي",bKbi:"KBI",bGo:"ابنِ الموقع",bPrev:"شكل الموقع عنده",bSites:"المواقع الموجودة",bMain:"الشيت الأساسي",bOwn:"شيت خاص",bSheet:"افتح الشيت",bDone:"اتبنى",bDoneNote:"يدخل من نفس رابط الموقع بالبيانات دي. ملف الشيت في Drive بتاعك.",bStart:"شهر البداية",bConfirm:"هيتعمل ملف شيت جديد ويوزر جديد.",bDel:"تشيل اليوزر ده؟ ملف الشيت بتاعه بيفضل في Drive.",bBuilding:"ببني الموقع… ده بياخد ثواني",
+ar:{brand:"Salary Site",acct:"حسابي",acctLead:"غيّر الاسم أو اسم الدخول أو كلمة السر. سيب كلمة السر الجديدة فاضية لو مش عايز تغيّرها.",aDisplay:"الاسم (اسمين)",aUser:"اسم الدخول",aNew:"كلمة السر الجديدة (اختياري)",aCur:"كلمة السر الحالية",aSaved:"اتحفظ. استخدم البيانات الجديدة في الدخول الجاي.",aEditSite:"تعديل بيانات الدخول",aNewFor:"كلمة سر جديدة (اختياري)",e_wrong_pass:"كلمة السر الحالية غلط.",e_user_not_found:"اليوزر مش موجود.",build:"بناء",bTitle:"بناء موقع جديد",bLead:"بيتعمل ملف Google Sheet جديد متصفّر من أول الشهر ده، ويوزر جديد يدخل من نفس رابط الموقع ويشوف اسمه ولوجو بحروفه وبياناته هو بس.",bName:"الاسم (اسمين)",bUser:"اسم الدخول (إنجليزي)",bPass:"كلمة السر (6 حروف على الأقل)",bBasic:"المرتب الأساسي",bKbi:"KBI",bGo:"ابنِ الموقع",bPrev:"شكل الموقع عنده",bSites:"المواقع الموجودة",bMain:"الشيت الأساسي",bOwn:"شيت خاص",bSheet:"افتح الشيت",bDone:"اتبنى",bDoneNote:"يدخل من نفس رابط الموقع بالبيانات دي. ملف الشيت في Drive بتاعك.",bStart:"شهر البداية",bConfirm:"هيتعمل ملف شيت جديد ويوزر جديد.",bDel:"تشيل اليوزر ده؟ ملف الشيت بتاعه بيفضل في Drive.",bBuilding:"ببني الموقع… ده بياخد ثواني",
  e_need_two_names:"اكتب اسمين على الأقل.",e_bad_username:"اسم الدخول: حروف إنجليزي وأرقام بس، من 3 حروف.",e_short_pass:"كلمة السر أقل من 6 حروف.",e_user_exists:"اسم الدخول ده موجود.",e_not_allowed:"مش مسموح للحساب ده.",month:"الشهر",leave:"الإجازات",year:"السنة",debts:"الديون",
  ld:["بفتح الدفتر…","بعدّ أيام الشهر…","بحسب الإضافي…","بجمع الخصومات…","براجع الإجازات…","ثواني والأرقام تجهز…"],
  synced:"متزامن",saving:"بيتحفظ…",reading:"بيقرا…",failed:"ما اتحفظش",
@@ -684,7 +686,7 @@ ar:{brand:"Salary Site",build:"بناء",bTitle:"بناء موقع جديد",bLe
  impact:"أثر اليوم على المرتب",save:"حفظ في الشيت",clear:"فضّي اليوم",cancel:"إلغاء",logout:"خروج",refresh:"تحديث",noDebts:"مفيش تاب اسمه «ديون» في الشيت.",
  e_bad_login:"اليوزر أو الباسورد غلط.",e_locked:"محاولات كتير غلط. استنى ربع ساعة.",e_no_users_sheet:"مفيش تاب My user أو فاضي.",e_unauthorized:"الجلسة انتهت. ادخل تاني.",
  e_net:"مفيش اتصال بالشيت.",e_url:"الرابط ده مش Web app شغال، أو الصلاحية مش Anyone.",e_unknown_action:"Code.gs قديم. حدّثه واعمل Deploy بنسخة جديدة.",e_bad_value:"Code.gs قديم أو المبلغ مش رقم. حدّث Code.gs واعمل Deploy بنسخة جديدة.",e_need:"اكتب اليوزر والباسورد."},
-en:{brand:"Salary Site",build:"Build",bTitle:"Build a new site",bLead:"Creates a fresh, empty Google Sheet starting this month and a new user who signs in at the same site address and sees their own name, initials logo and data only.",bName:"Name (two words)",bUser:"Username (English)",bPass:"Password (6+ characters)",bBasic:"Basic salary",bKbi:"KBI",bGo:"Build the site",bPrev:"How their site looks",bSites:"Existing sites",bMain:"Main sheet",bOwn:"Own sheet",bSheet:"Open sheet",bDone:"Built",bDoneNote:"They sign in at the same site address with these details. The sheet file is in your Drive.",bStart:"Starting month",bConfirm:"A new sheet file and a new user will be created.",bDel:"Remove this user? Their sheet file stays in Drive.",bBuilding:"Building the site… this takes a few seconds",
+en:{brand:"Salary Site",acct:"My account",acctLead:"Change your name, username or password. Leave the new password empty to keep the current one.",aDisplay:"Name (two words)",aUser:"Username",aNew:"New password (optional)",aCur:"Current password",aSaved:"Saved. Use the new details next time you sign in.",aEditSite:"Edit sign-in details",aNewFor:"New password (optional)",e_wrong_pass:"Current password is wrong.",e_user_not_found:"User not found.",build:"Build",bTitle:"Build a new site",bLead:"Creates a fresh, empty Google Sheet starting this month and a new user who signs in at the same site address and sees their own name, initials logo and data only.",bName:"Name (two words)",bUser:"Username (English)",bPass:"Password (6+ characters)",bBasic:"Basic salary",bKbi:"KBI",bGo:"Build the site",bPrev:"How their site looks",bSites:"Existing sites",bMain:"Main sheet",bOwn:"Own sheet",bSheet:"Open sheet",bDone:"Built",bDoneNote:"They sign in at the same site address with these details. The sheet file is in your Drive.",bStart:"Starting month",bConfirm:"A new sheet file and a new user will be created.",bDel:"Remove this user? Their sheet file stays in Drive.",bBuilding:"Building the site… this takes a few seconds",
  e_need_two_names:"Enter at least two names.",e_bad_username:"Username: English letters and digits only, 3+ characters.",e_short_pass:"Password is shorter than 6 characters.",e_user_exists:"That username already exists.",e_not_allowed:"Not allowed for this account.",month:"Month",leave:"Leave",year:"Year",debts:"Debts",
  ld:["Opening the ledger…","Counting the days…","Adding up the overs…","Totalling deductions…","Checking leave…","Numbers are almost ready…"],
  synced:"Synced",saving:"Saving…",reading:"Reading…",failed:"Not saved",
@@ -842,7 +844,7 @@ function render(){
   const adm=authed&&S.me&&S.me.admin===true;document.querySelectorAll('[data-tab="build"]').forEach(b=>b.hidden=!adm);$("#tabbar").classList.toggle("five",adm);
   if(S.tab==="build"&&authed&&!adm)S.tab="month";
   try{document.title="Salary Site — "+(S.me?S.me.display:"Hazem Nader");}catch(e){}
-  $("#nav").hidden=!authed;$("#tabbar").hidden=!authed;$("#sync").hidden=!authed;$("#btn-out").hidden=!authed;$("#btn-refresh").hidden=!authed;
+  $("#nav").hidden=!authed;$("#tabbar").hidden=!authed;$("#sync").hidden=!authed;$("#btn-out").hidden=!authed;$("#btn-acct").hidden=!authed||S.demo;$("#btn-refresh").hidden=!authed;
   $("#demo-bar").hidden=!S.demo;$("#demo-bar").textContent=t("demoBar");
   $("#btn-lang").textContent=S.lang==="ar"?"EN":"ع";
   document.querySelectorAll("[data-tab]").forEach(b=>{b.textContent=t(b.dataset.tab);b.setAttribute("aria-selected",b.dataset.tab===S.tab);});
@@ -990,7 +992,7 @@ function buildKey(){const d=new Date();let y=d.getFullYear(),m=d.getMonth()+1;if
 function viewBuild(){
   const f=S.bf,ini=f.name.trim()?initials(f.name):"??",B=S.built;
   const inp=(id,k,lbl,type,extra)=>'<div class="field"><label for="'+id+'">'+lbl+'</label><input class="inp'+(type==="text"?" txt":"")+'" id="'+id+'" data-bf="'+k+'" type="'+type+'" value="'+esc(f[k])+'" '+(extra||"")+"></div>";
-  const sites=(S.sites||[]).map(x=>'<div class="site-row"><b class="site-mark">'+esc(initials(x.display))+'</b><span class="who">'+esc(x.display)+'<small><span class="lat">'+esc(x.user)+"</span> · "+t(x.main?"bMain":"bOwn")+"</small></span>"+(x.url?'<a class="btn-outline btn-sm" href="'+esc(x.url)+'" target="_blank" rel="noopener">'+t("bSheet")+"</a>":"")+(!x.main&&!x.admin?'<button class="x" data-delsite="'+esc(x.user)+'" data-name="'+esc(x.display)+'" aria-label="delete">×</button>':"<span></span>")+"</div>").join("");
+  const sites=(S.sites||[]).map(x=>'<div class="site-row"><b class="site-mark">'+esc(initials(x.display))+'</b><span class="who">'+esc(x.display)+'<small><span class="lat">'+esc(x.user)+"</span> · "+t(x.main?"bMain":"bOwn")+"</small></span>"+(x.url?'<a class="btn-outline btn-sm" href="'+esc(x.url)+'" target="_blank" rel="noopener">'+t("bSheet")+"</a>":"<span></span>")+'<button class="x" data-editsite="'+esc(x.user)+'" aria-label="'+t("edit")+'" title="'+t("aEditSite")+'">✎</button>'+(!x.main&&!x.admin?'<button class="x" data-delsite="'+esc(x.user)+'" data-name="'+esc(x.display)+'" aria-label="delete">×</button>':"<span></span>")+"</div>").join("");
   return '<div class="wrap"><div class="page-head"><div class="eyebrow rv">Admin</div><h2 class="display">'+letters(S.lang==="ar"?t("bTitle"):"Build")+'</h2><span class="rule-g"></span><p class="sub rv" style="--i:2;max-width:620px">'+t("bLead")+"</p></div>"
   +(B?'<div class="built rv"><div class="site-mark big">'+esc(initials(B.display))+'</div><div><div class="eyebrow">'+t("bDone")+' ✓</div><h3 class="display" style="font-size:clamp(26px,4vw,40px);margin-top:8px">'+esc(B.display)+'</h3><p class="sub" style="margin-top:8px">'+t("bUser")+': <b class="lat">'+esc(B.user)+"</b> · "+t("bStart")+': <b class="lat">'+esc(B.month)+"</b></p><p class=\"sub\">"+t("bDoneNote")+'</p><a class="btn-outline btn-sm" style="margin-top:12px" href="'+esc(B.url)+'" target="_blank" rel="noopener">'+t("bSheet")+" &rarr;</a></div></div>":"")
   +'<div class="ledgers"><section class="led rv" style="--i:3"><div class="sec-h"><span class="num">01</span><h3>'+t("bTitle")+'</h3></div><form id="build-form" class="bform" autocomplete="off">'
@@ -1068,6 +1070,12 @@ function drawModal(){
       +(m.r?'<button type="button" class="tgl k-official mdone" data-m="toggle-done" aria-pressed="'+!!m.done+'"><span>'+t(m.done?"dDone":"markDone")+"</span><b>"+(m.done?"✓":"○")+"</b></button>":"")
       +(m.err?'<div class="err">'+m.err+"</div>":"");
       acts=btn("save",t("saveBtn"),"btn-solid")+btn("cancel",t("cancel"),"btn-outline")+(m.r?btn("del",t("del"),"btn-outline btn-del"):"");}
+  }else if(m.type==="acct"){
+    const self=!m.target;eb=self?esc(S.me?S.me.user:""):"Admin · "+esc(m.target);ttl=t(self?"acct":"aEditSite");
+    const fi=(id,k,lbl,type,extra)=>'<div class="field"><label for="'+id+'">'+lbl+'</label><input class="inp'+(k==="display"?" txt":"")+'" id="'+id+'" type="'+type+'" value="'+esc(m[k]||"")+'" '+(extra||"")+"></div>";
+    body='<p class="mq" style="font-size:13.5px;font-weight:500;color:var(--muted)">'+t("acctLead")+"</p>"+fi("a-display","display",t("aDisplay"),"text",'autocomplete="off"')+fi("a-user","user",t("aUser"),"text",'dir="ltr" autocapitalize="none" spellcheck="false" autocomplete="off"')
+      +fi("a-pass","pass",t(self?"aNew":"aNewFor"),"text",'dir="ltr" autocomplete="new-password"')+(self?fi("a-cur","cur",t("aCur"),"password",'dir="ltr" autocomplete="current-password" data-focus'):"")+(m.err?'<div class="err" role="alert">'+esc(m.err)+"</div>":"");
+    acts='<button type="button" class="btn-solid" data-m="save"'+(m.busy?" disabled":"")+">"+t("saveBtn")+"</button>"+btn("cancel",t("cancel"),"btn-outline");
   }else if(m.type==="build"){
     eb="Admin";ttl=t("bTitle");
     body='<p class="mq">'+t("bConfirm")+'</p><div class="mbox k-over"><span><b class="site-mark" style="margin-inline-end:10px">'+esc(initials(m.f.name))+"</b>"+esc(m.f.name.trim())+'</span><b style="font-size:14px" class="lat">'+esc(m.f.user.trim())+'</b></div><div class="mbox k-annual"><span>'+t("bStart")+'</span><b style="font-size:16px">'+buildKey()+"</b></div>";
@@ -1119,6 +1127,17 @@ function modalAct(a){
     lmGrab();const rec={sheet:m.sheet,basic:m.basic,dedDays:m.dedDays,bonus:m.bonus,note:m.note};closeModal();
     S.lm=S.lm.filter(x=>x.sheet!==rec.sheet).concat([rec]);render();write("setLm",rec,j=>{S.lm=j.lm||[];});return;
   }
+  if(m.type==="acct"){
+    const g=id=>{const el=document.getElementById(id);return el?el.value:"";};
+    m.display=g("a-display").trim();m.user=g("a-user").trim();m.pass=g("a-pass");m.cur=g("a-cur");const self=!m.target;let er="";
+    if(m.display.split(/\s+/).filter(Boolean).length<2)er="need_two_names";else if(!/^[A-Za-z0-9._-]{3,40}$/.test(m.user))er="bad_username";else if(m.pass&&m.pass.length<6)er="short_pass";else if(self&&!m.cur)er="wrong_pass";
+    if(er){m.err=errText(er);drawModal();return;}
+    m.err="";m.busy=true;drawModal();
+    const p=self?call("setAccount",{curPass:m.cur,user:m.user,pass:m.pass,display:m.display}):call("setSite",{target:m.target,user:m.user,pass:m.pass,display:m.display});
+    p.then(j=>{if(j.me){S.me=Object.assign({},S.me,j.me);S.ses.user=j.me.user;store.set("pay.ses",S.ses);store.set("pay.last",j.me.display||"");saveCache();}
+        if(j.sites)S.sites=j.sites;else if(S.sites)S.sites=null;closeModal();toast(t("aSaved"));if(S.tab==="build"&&!S.sites)loadSites();render();},
+      e=>{if(e&&e.code==="unauthorized"){closeModal();signOut(true);return;}m.busy=false;m.err=errText(e&&e.code);drawModal();});
+    return;}
   if(m.type==="build"){const f=m.f;closeModal();S.busy=true;S.bErr="";render();toast(t("bBuilding"));
     call("buildSite",{display:f.name.trim(),user:f.user.trim(),pass:f.pass,basic:+f.basic||0,kbi:+f.kbi||0}).then(j=>{S.built=j.built;S.sites=j.sites||[];S.bf={name:"",user:"",pass:"",basic:"",kbi:""};S.busy=false;S.viewKey="";render();window.scrollTo(0,0);},e=>{S.busy=false;S.bErr=errText(e&&e.code);render();});return;}
   if(m.type==="delsite"){const u=m.user;closeModal();call("delSite",{user:u}).then(j=>{S.sites=j.sites||[];render();},e=>toast(errText(e&&e.code)));return;}
@@ -1161,6 +1180,7 @@ document.addEventListener("click",ev=>{
   if(el0.closest("#btn-theme")){toggleTheme(ev);return;}
   if(el0.closest("#btn-lang")){S.lang=S.lang==="ar"?"en":"ar";store.set("pay.lang",S.lang);render();if(D)drawDay();if(M)drawModal();return;}
   if(el0.closest("#btn-out")){signOut();return;}
+  if(el0.closest("#btn-acct")){if(S.me)openModal({type:"acct",display:S.me.display,user:S.me.user,pass:"",cur:""});return;}
   if(el0.closest("#btn-refresh")){loadAll();return;}
   if($("#modal").contains(el0)){if(el0===$("#modal")){closeModal(true);return;}if((el=el0.closest("[data-m]")))modalAct(el.dataset.m);return;}
   if($("#overlay").contains(el0)){
@@ -1181,6 +1201,7 @@ document.addEventListener("click",ev=>{
     else if(a==="new-month"){let y,mo;if(S.months.length){const l=S.months[S.months.length-1];y=yearOf(l);mo=monOf(l)+1;if(mo>12){mo=1;y++;}}else{const k=currentKey();y=+k.slice(0,4);mo=+k.slice(5,7);}
       openModal({type:"newMonth",y,mo});}
     return;}
+  if((el=el0.closest("[data-editsite]"))){const x=(S.sites||[]).find(y=>y.user===el.dataset.editsite);if(x)openModal({type:"acct",target:x.user,display:x.display,user:x.user,pass:""});return;}
   if((el=el0.closest("[data-delsite]"))){openModal({type:"delsite",user:el.dataset.delsite,name:el.dataset.name});return;}
   if((el=el0.closest("[data-addled]"))){openModal({type:"debt",kind:el.dataset.addled,r:0,name:"",amount:"",date:iso(new Date()),note:"",done:false});return;}
   if((el=el0.closest("[data-edit]"))){const x=S.debts.items.find(y=>y.r===+el.dataset.edit);if(x)openModal({type:"debt",kind:x.type,r:x.r,name:x.name,amount:x.amount==null?"":x.amount,date:x.date,note:x.note,done:x.done});return;}
