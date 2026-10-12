@@ -412,13 +412,16 @@ button:disabled{opacity:.5;cursor:default}
 .bprev-total small{font-size:11px;letter-spacing:.2em;color:var(--blue)}
 .site-mark{display:inline-grid;place-items:center;min-width:40px;height:40px;padding:0 6px;background:var(--blue);color:var(--on-accent);font-family:var(--latin);font-weight:900;font-size:16px;letter-spacing:-.02em;font-style:normal}
 .site-mark.big{width:84px;height:84px;font-size:36px;box-shadow:8px 8px 0 var(--blue-soft)}
-.site-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto 42px 42px;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.site-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto 42px 42px 42px;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
 .site-row .who{font-weight:600;min-width:0}
 .site-row .who small{display:block;font-size:12.5px;font-weight:500;color:var(--muted)}
 .site-row .x{width:42px;height:42px;border:2px solid var(--line);background:transparent;color:var(--muted);font-weight:800;transition:all .2s}
 .site-row .x:hover{border-color:var(--red);color:var(--red)}
+.site-row .x.code{font-family:var(--latin);font-size:11px;letter-spacing:-.04em}
+.site-row .x.code:hover{border-color:var(--blue);color:var(--blue)}
+.built-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
 .built{display:flex;flex-wrap:wrap;gap:22px;align-items:center;border:2px solid var(--blue);background:var(--blue-soft);padding:22px;margin-top:26px}
-@media(max-width:620px){.brand .div,.brand .name{display:none}.site-row{grid-template-columns:auto minmax(0,1fr) 42px 42px}.site-row>a{grid-column:2/-1;justify-self:start;order:5}}
+@media(max-width:620px){.brand .div,.brand .name{display:none}.site-row{grid-template-columns:auto minmax(0,1fr) 42px 42px 42px}.site-row>a{grid-column:2/-1;justify-self:start;order:5}}
 .tabbar.five{grid-template-columns:repeat(5,1fr)}
 /* loading */
 @keyframes ldCell{0%,100%{background:var(--surface);border-color:var(--line);transform:none}18%{background:var(--k,var(--blue));border-color:var(--k,var(--blue));transform:translateY(-7px)}40%{background:var(--surface);border-color:var(--line);transform:none}}
@@ -570,6 +573,11 @@ button:disabled{opacity:.5;cursor:default}
 }
 ::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.scroll-progress{display:none}.fresh .letter{opacity:1}}
+
+/* رقم الشهر الكبير: غامق في الفاتح وفاتح في الغامق، وبيتلوّن باللون الأساسي لما الماوس يقرب */
+#ghost{color:var(--ink);text-shadow:none;opacity:.92;transition:color .45s ease,text-shadow .45s ease,opacity .45s ease}
+#ghost.lit{color:var(--blue);opacity:1;text-shadow:0 0 70px var(--blue-shadow),0 0 160px var(--blue-shadow)}
+@media(max-width:900px){#ghost{opacity:.1}}
 </style>
 </head>
 <body>
@@ -605,6 +613,11 @@ button:disabled{opacity:.5;cursor:default}
 "use strict";
 /* رابط الـ Web app بتاع Apps Script */
 const API_URL="https://script.google.com/macros/s/AKfycbye1RLvtQbGZlWRTBJUT9B7ddFwnZxnhdq0mN_zUyhtR2DYB1TR78RsV_GE5kGQIpfe/exec";
+const BRAND="Hazem Nader";
+const BRAND0="Hazem Nader";
+const PFX=BRAND===BRAND0?"":"s."+BRAND.toLowerCase().replace(/[^a-z0-9]+/g,"")+".";
+const pk=k=>(k==="pay.theme"||k==="pay.lang")?k:PFX+k;
+if(BRAND!==BRAND0){try{document.querySelectorAll('link[rel*="icon"]').forEach(l=>l.remove());const l=document.createElement("link");l.rel="icon";l.href="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#2f5fa8"/><text x="32" y="43" font-family="Arial,sans-serif" font-weight="900" font-size="30" text-anchor="middle" fill="#fff">'+initials(BRAND).replace(/[<>&]/g,"")+"</text></svg>");document.head.appendChild(l);}catch(e){}}
 
 /* ===== محرك الحساب: نفس معادلات Template 2026 ===== */
 const OVER_FIXED=["Over Time 4H","Over Time 6H","Over Time 8H","Friday","Double Paid","Over 4H D"];
@@ -658,7 +671,7 @@ function calcMonth(m){
 
 /* ===== النصوص ===== */
 const T={
-ar:{brand:"Salary Site",acct:"حسابي",acctLead:"غيّر الاسم أو اسم الدخول أو كلمة السر. سيب كلمة السر الجديدة فاضية لو مش عايز تغيّرها.",aDisplay:"الاسم (اسمين)",aUser:"اسم الدخول",aNew:"كلمة السر الجديدة (اختياري)",aCur:"كلمة السر الحالية",aSaved:"اتحفظ. استخدم البيانات الجديدة في الدخول الجاي.",aEditSite:"تعديل بيانات الدخول",aNewFor:"كلمة سر جديدة (اختياري)",e_wrong_pass:"كلمة السر الحالية غلط.",e_user_not_found:"اليوزر مش موجود.",build:"بناء",bTitle:"بناء موقع جديد",bLead:"بيتعمل ملف Google Sheet جديد متصفّر من أول الشهر ده، ويوزر جديد يدخل من نفس رابط الموقع ويشوف اسمه ولوجو بحروفه وبياناته هو بس.",bName:"الاسم (اسمين)",bUser:"اسم الدخول (إنجليزي)",bPass:"كلمة السر (6 حروف على الأقل)",bBasic:"المرتب الأساسي",bKbi:"KBI",bGo:"ابنِ الموقع",bPrev:"شكل الموقع عنده",bSites:"المواقع الموجودة",bMain:"الشيت الأساسي",bOwn:"شيت خاص",bSheet:"افتح الشيت",bDone:"اتبنى",bDoneNote:"يدخل من نفس رابط الموقع بالبيانات دي. ملف الشيت في Drive بتاعك.",bStart:"شهر البداية",bConfirm:"هيتعمل ملف شيت جديد ويوزر جديد.",bDel:"تشيل اليوزر ده؟ ملف الشيت بتاعه بيفضل في Drive.",bBuilding:"ببني الموقع… ده بياخد ثواني",
+ar:{brand:"Salary Site",acct:"حسابي",acctLead:"غيّر الاسم أو اسم الدخول أو كلمة السر. سيب كلمة السر الجديدة فاضية لو مش عايز تغيّرها.",aDisplay:"الاسم (اسمين)",aUser:"اسم الدخول",aNew:"كلمة السر الجديدة (اختياري)",aCur:"كلمة السر الحالية",aSaved:"اتحفظ. استخدم البيانات الجديدة في الدخول الجاي.",aEditSite:"تعديل بيانات الدخول",aNewFor:"كلمة سر جديدة (اختياري)",e_wrong_pass:"كلمة السر الحالية غلط.",e_user_not_found:"اليوزر مش موجود.",build:"بناء",bTitle:"بناء موقع جديد",bLead:"بيتعمل ملف Google Sheet جديد متصفّر من أول الشهر ده، ويوزر جديد يدخل من نفس رابط الموقع ويشوف اسمه ولوجو بحروفه وبياناته هو بس.",bName:"الاسم (اسمين)",bUser:"اسم الدخول (إنجليزي)",bPass:"كلمة السر (6 حروف على الأقل)",bBasic:"المرتب الأساسي",bKbi:"KBI",bGo:"ابنِ الموقع",bPrev:"شكل الموقع عنده",bSites:"المواقع الموجودة",bMain:"الشيت الأساسي",bOwn:"شيت خاص",bSheet:"افتح الشيت",bDone:"اتبنى",bDoneNote:"يدخل من نفس رابط الموقع بالبيانات دي، أو اعمله موقع مستقل من «كود الموقع». ملف الشيت في Drive بتاعك.",bNoCode:"الكود ما اتنسخش جوه الشيت الجديد: شغّل authorizeOnce تاني من محرر Apps Script ووافق على صلاحية Drive، واعمل Deploy نسخة جديدة.",cBtn:"كود الموقع",cTitle:"موقع مستقل",cLead:"الشيت الجديد فيه نسخة من الكود. افتحه ← Extensions ← Apps Script ← Deploy ← New deployment ← Web app (Execute as: Me · Who has access: Anyone)، وانسخ رابط الـ exec والصقه هنا. بعدها انسخ الكود وارفعه باسم index.html في repo جديد على GitHub وفعّل Pages.",cUrl:"رابط الـ Web App بتاع الشيت الجديد",cHint:"لو سبته فاضي الموقع الجديد هيشتغل على الباك اند الحالي.",cCopy:"انسخ الكود",cDl:"نزّل index.html",cCopied:"الكود اتنسخ ✓",e_code:"مقدرتش أقرا كود الموقع. افتح الموقع من رابطه المنشور وجرّب تاني.",bStart:"شهر البداية",bConfirm:"هيتعمل ملف شيت جديد ويوزر جديد.",bDel:"تشيل اليوزر ده؟ ملف الشيت بتاعه بيفضل في Drive.",bBuilding:"ببني الموقع… ده بياخد ثواني",
  e_need_two_names:"اكتب اسمين على الأقل.",e_bad_username:"اسم الدخول: حروف إنجليزي وأرقام بس، من 3 حروف.",e_short_pass:"كلمة السر أقل من 6 حروف.",e_user_exists:"اسم الدخول ده موجود.",e_not_allowed:"مش مسموح للحساب ده.",month:"الشهر",leave:"الإجازات",year:"السنة",debts:"الديون",
  ld:["بفتح الدفتر…","بعدّ أيام الشهر…","بحسب الإضافي…","بجمع الخصومات…","براجع الإجازات…","ثواني والأرقام تجهز…"],
  synced:"متزامن",saving:"بيتحفظ…",reading:"بيقرا…",failed:"ما اتحفظش",
@@ -686,7 +699,7 @@ ar:{brand:"Salary Site",acct:"حسابي",acctLead:"غيّر الاسم أو ا�
  impact:"أثر اليوم على المرتب",save:"حفظ في الشيت",clear:"فضّي اليوم",cancel:"إلغاء",logout:"خروج",refresh:"تحديث",noDebts:"مفيش تاب اسمه «ديون» في الشيت.",
  e_bad_login:"اليوزر أو الباسورد غلط.",e_locked:"محاولات كتير غلط. استنى ربع ساعة.",e_no_users_sheet:"مفيش تاب My user أو فاضي.",e_unauthorized:"الجلسة انتهت. ادخل تاني.",
  e_net:"مفيش اتصال بالشيت.",e_url:"الرابط ده مش Web app شغال، أو الصلاحية مش Anyone.",e_unknown_action:"Code.gs قديم. حدّثه واعمل Deploy بنسخة جديدة.",e_bad_value:"Code.gs قديم أو المبلغ مش رقم. حدّث Code.gs واعمل Deploy بنسخة جديدة.",e_need:"اكتب اليوزر والباسورد."},
-en:{brand:"Salary Site",acct:"My account",acctLead:"Change your name, username or password. Leave the new password empty to keep the current one.",aDisplay:"Name (two words)",aUser:"Username",aNew:"New password (optional)",aCur:"Current password",aSaved:"Saved. Use the new details next time you sign in.",aEditSite:"Edit sign-in details",aNewFor:"New password (optional)",e_wrong_pass:"Current password is wrong.",e_user_not_found:"User not found.",build:"Build",bTitle:"Build a new site",bLead:"Creates a fresh, empty Google Sheet starting this month and a new user who signs in at the same site address and sees their own name, initials logo and data only.",bName:"Name (two words)",bUser:"Username (English)",bPass:"Password (6+ characters)",bBasic:"Basic salary",bKbi:"KBI",bGo:"Build the site",bPrev:"How their site looks",bSites:"Existing sites",bMain:"Main sheet",bOwn:"Own sheet",bSheet:"Open sheet",bDone:"Built",bDoneNote:"They sign in at the same site address with these details. The sheet file is in your Drive.",bStart:"Starting month",bConfirm:"A new sheet file and a new user will be created.",bDel:"Remove this user? Their sheet file stays in Drive.",bBuilding:"Building the site… this takes a few seconds",
+en:{brand:"Salary Site",acct:"My account",acctLead:"Change your name, username or password. Leave the new password empty to keep the current one.",aDisplay:"Name (two words)",aUser:"Username",aNew:"New password (optional)",aCur:"Current password",aSaved:"Saved. Use the new details next time you sign in.",aEditSite:"Edit sign-in details",aNewFor:"New password (optional)",e_wrong_pass:"Current password is wrong.",e_user_not_found:"User not found.",build:"Build",bTitle:"Build a new site",bLead:"Creates a fresh, empty Google Sheet starting this month and a new user who signs in at the same site address and sees their own name, initials logo and data only.",bName:"Name (two words)",bUser:"Username (English)",bPass:"Password (6+ characters)",bBasic:"Basic salary",bKbi:"KBI",bGo:"Build the site",bPrev:"How their site looks",bSites:"Existing sites",bMain:"Main sheet",bOwn:"Own sheet",bSheet:"Open sheet",bDone:"Built",bDoneNote:"They sign in at the same site address with these details, or give them a standalone site from “Site code”. The sheet file is in your Drive.",bNoCode:"The code was not copied into the new sheet: run authorizeOnce again in the Apps Script editor, allow Drive access, then deploy a new version.",cBtn:"Site code",cTitle:"Standalone site",cLead:"The new sheet carries a copy of the code. Open it → Extensions → Apps Script → Deploy → New deployment → Web app (Execute as: Me · Who has access: Anyone), copy the exec URL and paste it here. Then copy the code and upload it as index.html to a new GitHub repo with Pages on.",cUrl:"Web App URL of the new sheet",cHint:"Leave empty and the new site runs on the current backend.",cCopy:"Copy code",cDl:"Download index.html",cCopied:"Code copied ✓",e_code:"Could not read the site code. Open the published site and try again.",bStart:"Starting month",bConfirm:"A new sheet file and a new user will be created.",bDel:"Remove this user? Their sheet file stays in Drive.",bBuilding:"Building the site… this takes a few seconds",
  e_need_two_names:"Enter at least two names.",e_bad_username:"Username: English letters and digits only, 3+ characters.",e_short_pass:"Password is shorter than 6 characters.",e_user_exists:"That username already exists.",e_not_allowed:"Not allowed for this account.",month:"Month",leave:"Leave",year:"Year",debts:"Debts",
  ld:["Opening the ledger…","Counting the days…","Adding up the overs…","Totalling deductions…","Checking leave…","Numbers are almost ready…"],
  synced:"Synced",saving:"Saving…",reading:"Reading…",failed:"Not saved",
@@ -721,7 +734,7 @@ const DS={ar:["أحد","اثنين","ثلاثاء","أربعاء","خميس","ج
 const DNL={ar:DN.ar,en:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]};
 
 /* ===== الحالة ===== */
-const store={get(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}},set(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+const store={get(k){try{return JSON.parse(localStorage.getItem(pk(k)));}catch(e){return null;}},set(k,v){try{v==null?localStorage.removeItem(pk(k)):localStorage.setItem(pk(k),JSON.stringify(v));}catch(e){}}};
 const S={lang:store.get("pay.lang")||"ar",ses:store.get("pay.ses"),demo:false,ready:false,busy:false,tab:"month",cur:null,
   yA:null,yY:null,months:[],debts:null,lm:[],lmOn:false,me:null,sites:null,built:null,bf:{name:"",user:"",pass:"",basic:"",kbi:""},bErr:"",err:"",adding:null,sync:"ok",viewKey:""};
 const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -769,7 +782,7 @@ function fail(e,reload){
 }
 function saveCache(){if(S.demo||!S.ses)return;store.set("pay.cache",{months:S.months,debts:S.debts,lm:S.lm,lmOn:S.lmOn,me:S.me,at:Date.now()});}
 function initials(n){const w=String(n||"").trim().split(/\s+/).filter(Boolean);if(!w.length)return "HN";return (w[0].charAt(0)+(w[1]?w[1].charAt(0):"")).toUpperCase();}
-function myMark(){return initials(S.me?S.me.display:(store.get("pay.last")||"Hazem Nader"));}
+function myMark(){return initials(S.me?S.me.display:(store.get("pay.last")||BRAND));}
 const LM_DAYS=26,LM_BASIC=12000;
 function lmOf(m){return m&&S.lmOn?S.lm.find(x=>x.sheet===m.name)||null:null;}
 function lmCalc(x){if(!x)return null;const basic=+x.basic||0,rate=basic/LM_DAYS,ded=(+x.dedDays||0)*rate,bonus=+x.bonus||0;return {basic,rate,dedDays:+x.dedDays||0,ded,bonus,net:basic-ded+bonus};}
@@ -823,7 +836,7 @@ async function demoCall(action,p){
   if(action==="delDebt"){D.debts.items=D.debts.items.filter(y=>y.r!==p.row);return {ok:true,debts:D.debts};}
   if(action==="setLm"){D.lm=D.lm.filter(x=>x.sheet!==p.sheet);D.lm.push({sheet:p.sheet,basic:p.basic,dedDays:p.dedDays,bonus:p.bonus,note:p.note,net:null});return {ok:true,lm:D.lm};}
   if(action==="delLm"){D.lm=D.lm.filter(x=>x.sheet!==p.sheet);return {ok:true,lm:D.lm};}
-  return {ok:true,months:D.months,debts:D.debts,lm:D.lm,lmOn:true};
+  return {ok:true,months:D.months,debts:D.debts,lm:D.lm,lmOn:BRAND===BRAND0};
 }
 
 /* ===== الرسم ===== */
@@ -843,7 +856,7 @@ function render(){
   $("#brand-name").textContent=t("brand");$("#brand-mark").textContent=myMark();
   const adm=authed&&S.me&&S.me.admin===true;document.querySelectorAll('[data-tab="build"]').forEach(b=>b.hidden=!adm);$("#tabbar").classList.toggle("five",adm);
   if(S.tab==="build"&&authed&&!adm)S.tab="month";
-  try{document.title="Salary Site — "+(S.me?S.me.display:"Hazem Nader");}catch(e){}
+  try{document.title="Salary Site — "+(S.me?S.me.display:BRAND);}catch(e){}
   $("#nav").hidden=!authed;$("#tabbar").hidden=!authed;$("#sync").hidden=!authed;$("#btn-out").hidden=!authed;$("#btn-acct").hidden=!authed||S.demo;$("#btn-refresh").hidden=!authed;
   $("#demo-bar").hidden=!S.demo;$("#demo-bar").textContent=t("demoBar");
   $("#btn-lang").textContent=S.lang==="ar"?"EN":"ع";
@@ -987,14 +1000,20 @@ function viewDebts(){
 }
 
 /* ===== بناء موقع جديد (للأدمن) ===== */
+function siteCode(src,display,url){
+  const q=JSON.stringify,d=String(display).replace(/[<>]/g,"").trim(),tag="const BRAND="+q(d)+";";
+  const out=src.replace(/const API_URL="[^"]*";/,()=>"const API_URL="+q(url||API_URL)+";").replace(/const BRAND="[^"]*";/,()=>tag)
+    .replace(/<title>[^<]*<\/title>/,()=>"<title>Salary Site — "+esc(d)+"</title>").replace(/(id="brand-mark">)[^<]*/,(_,a)=>a+esc(initials(d)));
+  return out.indexOf(tag)>=0&&/<\/html>\s*$/.test(out)?out:"";
+}
 function loadSites(){call("sites").then(j=>{S.sites=j.sites||[];if(S.tab==="build")render();},e=>{S.sites=[];toast(errText(e&&e.code));});}
 function buildKey(){const d=new Date();let y=d.getFullYear(),m=d.getMonth()+1;if(d.getDate()>=26){m++;if(m>12){m=1;y++;}}return MN[S.lang][m-1]+" "+y;}
 function viewBuild(){
   const f=S.bf,ini=f.name.trim()?initials(f.name):"??",B=S.built;
   const inp=(id,k,lbl,type,extra)=>'<div class="field"><label for="'+id+'">'+lbl+'</label><input class="inp'+(type==="text"?" txt":"")+'" id="'+id+'" data-bf="'+k+'" type="'+type+'" value="'+esc(f[k])+'" '+(extra||"")+"></div>";
-  const sites=(S.sites||[]).map(x=>'<div class="site-row"><b class="site-mark">'+esc(initials(x.display))+'</b><span class="who">'+esc(x.display)+'<small><span class="lat">'+esc(x.user)+"</span> · "+t(x.main?"bMain":"bOwn")+"</small></span>"+(x.url?'<a class="btn-outline btn-sm" href="'+esc(x.url)+'" target="_blank" rel="noopener">'+t("bSheet")+"</a>":"<span></span>")+'<button class="x" data-editsite="'+esc(x.user)+'" aria-label="'+t("edit")+'" title="'+t("aEditSite")+'">✎</button>'+(!x.main&&!x.admin?'<button class="x" data-delsite="'+esc(x.user)+'" data-name="'+esc(x.display)+'" aria-label="delete">×</button>':"<span></span>")+"</div>").join("");
+  const sites=(S.sites||[]).map(x=>'<div class="site-row"><b class="site-mark">'+esc(initials(x.display))+'</b><span class="who">'+esc(x.display)+'<small><span class="lat">'+esc(x.user)+"</span> · "+t(x.main?"bMain":"bOwn")+"</small></span>"+(x.url?'<a class="btn-outline btn-sm" href="'+esc(x.url)+'" target="_blank" rel="noopener">'+t("bSheet")+"</a>":"<span></span>")+(!x.main?'<button class="x code" data-codesite="'+esc(x.user)+'" aria-label="'+t("cBtn")+'" title="'+t("cBtn")+'">&lt;/&gt;</button>':"<span></span>")+'<button class="x" data-editsite="'+esc(x.user)+'" aria-label="'+t("edit")+'" title="'+t("aEditSite")+'">✎</button>'+(!x.main&&!x.admin?'<button class="x" data-delsite="'+esc(x.user)+'" data-name="'+esc(x.display)+'" aria-label="delete">×</button>':"<span></span>")+"</div>").join("");
   return '<div class="wrap"><div class="page-head"><div class="eyebrow rv">Admin</div><h2 class="display">'+letters(S.lang==="ar"?t("bTitle"):"Build")+'</h2><span class="rule-g"></span><p class="sub rv" style="--i:2;max-width:620px">'+t("bLead")+"</p></div>"
-  +(B?'<div class="built rv"><div class="site-mark big">'+esc(initials(B.display))+'</div><div><div class="eyebrow">'+t("bDone")+' ✓</div><h3 class="display" style="font-size:clamp(26px,4vw,40px);margin-top:8px">'+esc(B.display)+'</h3><p class="sub" style="margin-top:8px">'+t("bUser")+': <b class="lat">'+esc(B.user)+"</b> · "+t("bStart")+': <b class="lat">'+esc(B.month)+"</b></p><p class=\"sub\">"+t("bDoneNote")+'</p><a class="btn-outline btn-sm" style="margin-top:12px" href="'+esc(B.url)+'" target="_blank" rel="noopener">'+t("bSheet")+" &rarr;</a></div></div>":"")
+  +(B?'<div class="built rv"><div class="site-mark big">'+esc(initials(B.display))+'</div><div><div class="eyebrow">'+t("bDone")+' ✓</div><h3 class="display" style="font-size:clamp(26px,4vw,40px);margin-top:8px">'+esc(B.display)+'</h3><p class="sub" style="margin-top:8px">'+t("bUser")+': <b class="lat">'+esc(B.user)+"</b> · "+t("bStart")+': <b class="lat">'+esc(B.month)+"</b></p><p class=\"sub\">"+t("bDoneNote")+"</p>"+(B.code===false?'<div class="err" style="margin-top:10px">'+t("bNoCode")+"</div>":"")+'<div class="built-acts"><button type="button" class="btn-solid btn-sm" data-codesite="'+esc(B.user)+'">'+t("cBtn")+' &lt;/&gt;</button><a class="btn-outline btn-sm" href="'+esc(B.url)+'" target="_blank" rel="noopener">'+t("bSheet")+" &rarr;</a></div></div></div>":"")
   +'<div class="ledgers"><section class="led rv" style="--i:3"><div class="sec-h"><span class="num">01</span><h3>'+t("bTitle")+'</h3></div><form id="build-form" class="bform" autocomplete="off">'
   +inp("b-name","name",t("bName"),"text",'autocomplete="off"')
   +'<div class="hrs">'+inp("b-user","user",t("bUser"),"text",'dir="ltr" autocapitalize="none" spellcheck="false" autocomplete="off"')+inp("b-pass","pass",t("bPass"),"text",'dir="ltr" autocomplete="new-password"')+"</div>"
@@ -1080,6 +1099,10 @@ function drawModal(){
     eb="Admin";ttl=t("bTitle");
     body='<p class="mq">'+t("bConfirm")+'</p><div class="mbox k-over"><span><b class="site-mark" style="margin-inline-end:10px">'+esc(initials(m.f.name))+"</b>"+esc(m.f.name.trim())+'</span><b style="font-size:14px" class="lat">'+esc(m.f.user.trim())+'</b></div><div class="mbox k-annual"><span>'+t("bStart")+'</span><b style="font-size:16px">'+buildKey()+"</b></div>";
     acts=btn("save",t("bGo"),"btn-solid")+btn("cancel",t("cancel"),"btn-outline");
+  }else if(m.type==="code"){
+    eb="Admin · "+esc(m.user);ttl=t("cTitle");
+    body='<div class="mbox k-over"><span><b class="site-mark" style="margin-inline-end:10px">'+esc(initials(m.display))+"</b>"+esc(m.display)+'</span><b style="font-size:14px" class="lat">index.html</b></div><p class="mq" style="font-size:13.5px;font-weight:500;color:var(--muted)">'+t("cLead")+'</p><div class="field"><label for="c-url">'+t("cUrl")+'</label><input class="inp txt" id="c-url" type="url" dir="ltr" spellcheck="false" autocomplete="off" placeholder="https://script.google.com/macros/s/…/exec" value="'+esc(m.url||"")+'" data-focus><small class="sub" style="display:block;margin-top:6px;font-size:12px">'+t("cHint")+"</small></div>"+(m.err?'<div class="err" role="alert">'+esc(m.err)+"</div>":"");
+    acts=btn("copy",t("cCopy"),"btn-solid")+btn("dl",t("cDl"),"btn-outline")+btn("cancel",t("back"),"btn-outline");
   }else if(m.type==="delsite"){
     eb="Admin";ttl=t("del");body='<p class="mq">'+t("bDel")+'</p><div class="mbox k-single"><span>'+esc(m.name)+'</span><b style="font-size:14px" class="lat">'+esc(m.user)+"</b></div>";
     acts=btn("save",t("yesDel"),"btn-solid btn-red")+btn("cancel",t("back"),"btn-outline");
@@ -1140,6 +1163,16 @@ function modalAct(a){
     return;}
   if(m.type==="build"){const f=m.f;closeModal();S.busy=true;S.bErr="";render();toast(t("bBuilding"));
     call("buildSite",{display:f.name.trim(),user:f.user.trim(),pass:f.pass,basic:+f.basic||0,kbi:+f.kbi||0}).then(j=>{S.built=j.built;S.sites=j.sites||[];S.bf={name:"",user:"",pass:"",basic:"",kbi:""};S.busy=false;S.viewKey="";render();window.scrollTo(0,0);},e=>{S.busy=false;S.bErr=errText(e&&e.code);render();});return;}
+  if(m.type==="code"){
+    m.url=($("#c-url")?$("#c-url").value:"").trim();m.err="";
+    if(m.url&&!/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(m.url))m.err=errText("url");
+    else if(!m.src)m.err=errText("code");
+    if(m.err){drawModal();return;}
+    const html=siteCode(m.src,m.display,m.url);if(!html){m.err=errText("code");drawModal();return;}
+    if(a==="dl"){const u=URL.createObjectURL(new Blob([html],{type:"text/html"})),x=document.createElement("a");x.href=u;x.download="index.html";document.body.appendChild(x);x.click();x.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);return;}
+    const ok=()=>toast(t("cCopied")),old=()=>{const ta=document.createElement("textarea");ta.value=html;ta.style.cssText="position:fixed;opacity:0";document.body.appendChild(ta);ta.select();let d=false;try{d=document.execCommand("copy");}catch(e){}ta.remove();d?ok():toast(errText("code"));};
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(html).then(ok,old);else old();
+    return;}
   if(m.type==="delsite"){const u=m.user;closeModal();call("delSite",{user:u}).then(j=>{S.sites=j.sites||[];render();},e=>toast(errText(e&&e.code)));return;}
   if(m.type==="field"){const mo=monthBy(S.cur),sheet=mo.name;closeModal();mo[m.f]=m.val;mo.total=null;render();
     write("setField",{sheet,field:m.f,value:m.val},j=>{const i=S.months.findIndex(x=>x.name===sheet);if(i>=0)S.months[i]=j.month;});return;}
@@ -1196,11 +1229,12 @@ document.addEventListener("click",ev=>{
   if((el=el0.closest("[data-goto]"))){S.cur=el.dataset.goto;go("month");return;}
   if((el=el0.closest("[data-act]"))){const a=el.dataset.act;
     if(a==="prev")stepMonth(-1);else if(a==="next")stepMonth(1);
-    else if(a==="demo"){buildDemo();S.demo=true;S.err="";applyAll({months:DEMO.months,debts:DEMO.debts,lm:DEMO.lm,lmOn:true,me:null});S.me={user:"demo",display:"Hazem Nader",admin:false};S.ready=true;render();}
+    else if(a==="demo"){buildDemo();S.demo=true;S.err="";applyAll({months:DEMO.months,debts:DEMO.debts,lm:DEMO.lm,lmOn:BRAND===BRAND0,me:null});S.me={user:"demo",display:BRAND,admin:false};S.ready=true;render();}
     else if(a==="lm"){const m=monthBy(S.cur),x=lmOf(m),lastRec=S.lm.length?S.lm[S.lm.length-1]:null;openModal({type:"lm",sheet:m.name,exists:!!x,basic:x?x.basic:(lastRec?lastRec.basic:LM_BASIC),dedDays:x?x.dedDays:0,bonus:x?x.bonus:0,note:x?x.note:""});}
     else if(a==="new-month"){let y,mo;if(S.months.length){const l=S.months[S.months.length-1];y=yearOf(l);mo=monOf(l)+1;if(mo>12){mo=1;y++;}}else{const k=currentKey();y=+k.slice(0,4);mo=+k.slice(5,7);}
       openModal({type:"newMonth",y,mo});}
     return;}
+  if((el=el0.closest("[data-codesite]"))){const x=(S.sites||[]).find(y=>y.user===el.dataset.codesite)||(S.built&&S.built.user===el.dataset.codesite?S.built:null);if(x){const m={type:"code",user:x.user,display:x.display,url:"",src:null};openModal(m);fetch(location.href.split("#")[0].split("?")[0],{cache:"no-store"}).then(r=>r.ok?r.text():"").then(h=>{m.src=h;},()=>{});}return;}
   if((el=el0.closest("[data-editsite]"))){const x=(S.sites||[]).find(y=>y.user===el.dataset.editsite);if(x)openModal({type:"acct",target:x.user,display:x.display,user:x.user,pass:""});return;}
   if((el=el0.closest("[data-delsite]"))){openModal({type:"delsite",user:el.dataset.delsite,name:el.dataset.name});return;}
   if((el=el0.closest("[data-addled]"))){openModal({type:"debt",kind:el.dataset.addled,r:0,name:"",amount:"",date:iso(new Date()),note:"",done:false});return;}
